@@ -1,4 +1,3 @@
-# Bootstrap Portfolio Page
+# Game Dev Portfolio
 
-A Pen created on CodePen.io. Original URL: [https://codepen.io/79man/pen/VKjqXb](https://codepen.io/79man/pen/VKjqXb).
-
+Based on [this](https://codepen.io/79man/pen/VKjqXb) Boostrap template from CodePen.io.
