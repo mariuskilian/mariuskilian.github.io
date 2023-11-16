@@ -3,6 +3,17 @@
  * Copyright 2013-2016 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
  */
+ *, *::after, *::before {
+  box-sizing: border-box;
+ }
+
+:root {
+  --image-width: 1056;
+  --image-height: 792;
+  --image-target-height: 325;
+  --num-images: 4;
+}
+
 body {
   font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
   overflow-x: hidden;
@@ -71,10 +82,11 @@ header {
   text-align: center;
   background: #18bc9c;
   color: white;
+  box-shadow: 0px 2px 5px black;
 }
 header .container {
-  padding-top: 100px;
-  padding-bottom: 50px;
+  padding-top: 87px;
+  padding-bottom: 33px;
 }
 header img {
   display: block;
@@ -83,24 +95,27 @@ header img {
 header .intro-text .name {
   display: block;
   font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  text-transform: uppercase;
   font-weight: 700;
   font-size: 2em;
+  color: #2c3e50;
+  text-shadow: 2px 2px 5px #cccf, -2px 2px 5px #cccf, 2px -2px 5px #cccf, -2px -2px 5px #cccf;
 }
 header .intro-text .skills {
-  font-size: 1.25em;
-  font-weight: 300;
+  font-size: 1em;
+  font-weight: 400;
+  color: #2c3e50;
+  text-shadow: 2px 2px 5px #cccf, -2px 2px 5px #cccf, 2px -2px 5px #cccf, -2px -2px 5px #cccf;
 }
 @media (min-width: 768px) {
   header .container {
-    padding-top: 200px;
-    padding-bottom: 100px;
+    padding-top: 125px;
+    padding-bottom: 25px;
   }
   header .intro-text .name {
-    font-size: 4.75em;
+    font-size: 2.75em;
   }
   header .intro-text .skills {
-    font-size: 1.75em;
+    font-size: 1.25em;
   }
 }
 .navbar-custom {
@@ -109,6 +124,7 @@ header .intro-text .skills {
   text-transform: uppercase;
   font-weight: 700;
   border: none;
+  box-shadow: 0px 2px 5px black;
 }
 .navbar-custom a:focus {
   outline: none;
@@ -504,5 +520,53 @@ fieldset[disabled] .btn-success.active {
   display: none;
 }
 .profile {
-  height: 350px;
+  box-shadow: 0px 0px 5px #333f;
+  height: 175px;
+}
+.no-highlight {
+  user-drag: none;
+  -webkit-user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  cursor: default;
+}
+.gallery {
+  width: 100%;
+  position:absolute;
+  top:100px;
+  left:0px;
+  overflow:hidden;
+}
+@media (max-width: 768px) {
+  .gallery  {
+    top:50px;
+  }
+}
+.slider {
+  display: flex;
+  width: 100%;
+  white-space: nowrap;
+}
+.carousel-element {
+  display: inline-block;
+  height: 325px;
+  aspect-ratio: 433 / 325;
+  min-width: 433px;
+  overflow: hidden;
+  margin-right: -1px
+}
+.carousel-element > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.carousel-element::before {
+  content: "";
+  position: absolute;
+  transform:translateX(-217px);
+  width: 100%;
+  height: 100%;
+  background: url('resources/Carousel\ Overlay.png') left/contain no-repeat;
 }
