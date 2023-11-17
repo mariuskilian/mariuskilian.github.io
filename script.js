@@ -126,8 +126,6 @@ function createCarouselElement(filename) {
 
   const carouselImage = document.createElement("img");
   carouselImage.src = "resources/carousel/" + filename;
-  console.log(filename);
-  console.log(carouselImage.src);
   carouselImage.draggable = false;
 
   carouselElement.appendChild(carouselImage);
@@ -153,7 +151,7 @@ function attachOriginalImages() {
         slider.insertBefore(carouselElement, beforeElement);
       }
 
-      // setTimeout(imageAnimationInitialize, 25);
+      setTimeout(imageAnimationInitialize);
 
       // var pattern = /<span\s+class="name">([^<]+)<\/span>/g;
       // var matches = [];
