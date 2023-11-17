@@ -126,6 +126,7 @@ function createCarouselElement(filename) {
 
   const carouselImage = document.createElement("img");
   carouselImage.src = "resources/carousel/" + filename;
+  console.log(filename);
   console.log(carouselImage.src);
   carouselImage.draggable = false;
 
