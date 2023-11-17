@@ -139,7 +139,7 @@ function attachOriginalImages() {
   // Get all image paths from the resources/carousel folder and add them to the
   // sliders div in a random order
   $.ajax({
-    url: "contents/resources/carousel",
+    url: "repos/mariuskilian/mariuskilian.github.io/contents/resources/carousel",
     method: "GET",
     success: function (data) {
       console.log(data);
