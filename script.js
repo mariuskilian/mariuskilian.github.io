@@ -175,3 +175,22 @@ function attachOriginalImages() {
 
 window.addEventListener("DOMContentLoaded", attachOriginalImages);
 window.addEventListener("resize", duplicateImagesToFitWidth);
+
+function initiatePortfolioHoverEffect() {
+  var items = document.getElementsByClassName("portfolio-item");
+  console.log(items);
+  for (let i = 0; i < items.length; i++) {
+    const cover = items[i].getElementsByTagName("IMG")[0];
+    cover.src = cover.getAttribute("imgpath");
+    items[i].addEventListener("mouseover", () => {
+      if (cover.src != cover.getAttribute("gifpath"))
+        cover.src = cover.getAttribute("gifpath");
+    });
+    items[i].addEventListener(
+      "mouseout",
+      () => (cover.src = cover.getAttribute("imgpath"))
+    );
+  }
+}
+
+window.addEventListener("DOMContentLoaded", initiatePortfolioHoverEffect);

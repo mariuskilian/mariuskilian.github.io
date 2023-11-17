@@ -137,6 +137,7 @@ This is just one of the ways the different components interact each other. The m
 Some events required communication between two separate instances, generally server to one or more clients, or a client to the server. For these, I used Photon Bolt's event system. For this, I had to first create all necessary events using Bolt's UI within Unity, to then allow Bolt to compile these events into interfaces, which are inherited by the `GlobalEventListener` Bolt class, which is supplied with several methods of type `public virtual void OnEvent`, with a single parameter as the type of event. These `OnEvent` methods then have to be overridden by a class trying to react to the event. This code snippet shows these compiled methods being created:
 
 <a class="clear"></a>
+
 <div class="code-snippet no-link" csname="GlobalEventListener"><a>⠀</a></div>
 
 ```C#
@@ -182,7 +183,7 @@ A lot of reactions to events happen client-side. For example, as the server upda
     <h4>Global &rarr; Local</h4>
   </summary><br />
 
-To handle incoming global Bolt events, each global event is handled, and a local event is invoked, which is then handled normally by the rest of the client codebase. In some cases, some extra steps are taken, like when the `StoreNewStoreEvent` is triggered, receiving the Bolt Entities (entities that exist in the network) with the network IDs passed by the global event (`evnt.UnitX`), to receive the actual units, which are then passed to the local event. 
+To handle incoming global Bolt events, each global event is handled, and a local event is invoked, which is then handled normally by the rest of the client codebase. In some cases, some extra steps are taken, like when the `StoreNewStoreEvent` is triggered, receiving the Bolt Entities (entities that exist in the network) with the network IDs passed by the global event (`evnt.UnitX`), to receive the actual units, which are then passed to the local event.
 
 <div class="code-snippet" csname="ClientGlobalEventMan"><a target="_blank" href="https://github.com/mariuskilian/Poke-Arena/blob/f27d920b8b45b620df1d2a126aa1b886bdc6777d/Assets/Scripts/Client/ClientGlobalEventMan.cs#L18">⠀</a></div>
 
@@ -274,18 +275,17 @@ private void HandleUnitDeselectEvent(BoardUnit unit, Vector3 clickPos, bool clic
   </summary><br />
 
 These are some topics I didn't yet have the time to write about and want to add to this page in the future:
-* Animations
-* Shaders
-* Systems
-    * Board & Bench
-    * Evolution
-    * Unit Pools
-* Settings
-* Editor Scripts
+
+- Animations
+- Shaders
+- Systems
+  - Board & Bench
+  - Evolution
+  - Unit Pools
+- Settings
+- Editor Scripts
 
 <hr></details><br />
-
-
 
 <!-- Classes -->
 
@@ -298,8 +298,6 @@ These are some topics I didn't yet have the time to write about and want to add 
 [`PlayerBoardMan`]: https://github.com/mariuskilian/Poke-Arena/blob/master/Assets/Scripts/Server/PerPlayer/PlayerManagers/PlayerBoardMan.cs
 [`PlayerManager`]: https://github.com/mariuskilian/Poke-Arena/blob/master/Assets/Scripts/Server/PerPlayer/PlayerManager.cs
 [`ClientGlobalEventMan`]: https://github.com/mariuskilian/Poke-Arena/blob/master/Assets/Scripts/Client/ClientGlobalEventMan.cs
-
-
 
 <!-- CSS -->
 
@@ -334,6 +332,12 @@ These are some topics I didn't yet have the time to write about and want to add 
         float: none;
         text-align: center;
         margin-left: 0; 
+    }
+  }
+
+  @media (max-width: 768px) {
+    body {
+      font-size: 24px;
     }
   }
 
