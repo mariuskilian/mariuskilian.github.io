@@ -139,9 +139,10 @@ function attachOriginalImages() {
   // Get all image paths from the resources/carousel folder and add them to the
   // sliders div in a random order
   $.ajax({
-    url: "resources/carousel/",
+    url: "contents/resources/carousel",
     method: "GET",
     success: function (data) {
+      console.log(data);
       var pattern = /<span\s+class="name">([^<]+)<\/span>/g;
       var matches = [];
       var match;
