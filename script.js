@@ -126,6 +126,7 @@ function createCarouselElement(filename) {
 
   const carouselImage = document.createElement("img");
   carouselImage.src = "resources/carousel/" + filename;
+  console.log(carouselImage.src);
   carouselImage.draggable = false;
 
   carouselElement.appendChild(carouselImage);
@@ -142,22 +143,30 @@ function attachOriginalImages() {
     url: "https://api.github.com/repos/mariuskilian/mariuskilian.github.io/contents/resources/carousel",
     method: "GET",
     success: function (data) {
-      console.log(data);
-      var pattern = /<span\s+class="name">([^<]+)<\/span>/g;
-      var matches = [];
-      var match;
-      while ((match = pattern.exec(data)) !== null) matches.push(match[1]);
-      matches.shift(); // Has a .. file path
-      var swapMatch;
-      while (matches.length > 0) {
-        const randomIdx = Math.floor(Math.random() * matches.length);
-        swapMatch = matches[randomIdx];
-        matches[randomIdx] = matches[0];
-        matches[0] = swapMatch;
-        slider.appendChild(createCarouselElement(matches.shift()));
+      for (let i = 0; i < data.length; i++) {
+        const nElements = slider.childNodes.length;
+        const rndIdx = Math.floor(Math.random() * (nElements + 1));
+        const carouselElement = createCarouselElement(data[i].name);
+        const beforeElement =
+          rndIdx == nElements ? null : slider.childNodes[rndIdx];
+        slider.insertBefore(carouselElement, beforeElement);
       }
 
-      setTimeout(imageAnimationInitialize);
+      setTimeout(imageAnimationInitialize, 25);
+
+      // var pattern = /<span\s+class="name">([^<]+)<\/span>/g;
+      // var matches = [];
+      // var match;
+      // while ((match = pattern.exec(data)) !== null) matches.push(match[1]);
+      // matches.shift(); // Has a .. file path
+      // var swapMatch;
+      // while (matches.length > 0) {
+      //   const randomIdx = Math.floor(Math.random() * matches.length);
+      //   swapMatch = matches[randomIdx];
+      //   matches[randomIdx] = matches[0];
+      //   matches[0] = swapMatch;
+      //   slider.appendChild(createCarouselElement(matches.shift()));
+      // }
     },
     error: function (err) {
       console.error("Error fetching file list:", err);
