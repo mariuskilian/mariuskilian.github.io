@@ -153,7 +153,7 @@ function attachOriginalImages() {
         slider.insertBefore(carouselElement, beforeElement);
       }
 
-      setTimeout(imageAnimationInitialize, 25);
+      // setTimeout(imageAnimationInitialize, 25);
 
       // var pattern = /<span\s+class="name">([^<]+)<\/span>/g;
       // var matches = [];
