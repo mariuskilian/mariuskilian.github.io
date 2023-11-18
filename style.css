@@ -3,6 +3,7 @@
  * Copyright 2013-2016 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
  */
+ 
  *, *::after, *::before {
   box-sizing: border-box;
  }
@@ -564,5 +565,8 @@ fieldset[disabled] .btn-success.active {
 @media (max-width: 768px) {
   body {
     font-size: 24px;
+  }
+  section h2, .portfolio-modal .modal-content h2 {
+    font-size: 2em;
   }
 }
