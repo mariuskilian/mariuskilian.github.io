@@ -120,12 +120,12 @@ function imageAnimationInitialize() {
   setTimeout(imageAnimationReset, 10);
 }
 
-function createCarouselElement(filename) {
+function createCarouselElement(imgpath) {
   const carouselElement = document.createElement("div");
   carouselElement.classList.add("carousel-element");
 
   const carouselImage = document.createElement("img");
-  carouselImage.src = "resources/carousel/" + filename;
+  carouselImage.src = imgpath;
   carouselImage.draggable = false;
 
   carouselElement.appendChild(carouselImage);
@@ -139,13 +139,14 @@ function attachOriginalImages() {
   // Get all image paths from the resources/carousel folder and add them to the
   // sliders div in a random order
   $.ajax({
-    url: "https://api.github.com/repos/mariuskilian/mariuskilian.github.io/contents/resources/carousel",
+    url: "https://api.github.com/repos/mariuskilian/mariuskilian.github.io/contents/resources/carousel/images",
     method: "GET",
     success: function (data) {
       for (let i = 0; i < data.length; i++) {
+        console.log(data[i]);
         const nElements = slider.childNodes.length;
         const rndIdx = Math.floor(Math.random() * (nElements + 1));
-        const carouselElement = createCarouselElement(data[i].name);
+        const carouselElement = createCarouselElement(data[i].path);
         const beforeElement =
           rndIdx == nElements ? null : slider.childNodes[rndIdx];
         slider.insertBefore(carouselElement, beforeElement);
@@ -176,21 +177,79 @@ function attachOriginalImages() {
 window.addEventListener("DOMContentLoaded", attachOriginalImages);
 window.addEventListener("resize", duplicateImagesToFitWidth);
 
+function playGif(portfolioitem, play) {
+  const cover = portfolioitem.getElementsByTagName("IMG")[0];
+  if (play) {
+    if (cover.src != cover.getAttribute("gifpath"))
+      cover.src = cover.getAttribute("gifpath");
+  } else cover.src = cover.getAttribute("imgpath");
+}
+
 function initiatePortfolioHoverEffect() {
   var items = document.getElementsByClassName("portfolio-item");
   console.log(items);
   for (let i = 0; i < items.length; i++) {
-    const cover = items[i].getElementsByTagName("IMG")[0];
-    cover.src = cover.getAttribute("imgpath");
-    items[i].addEventListener("mouseover", () => {
-      if (cover.src != cover.getAttribute("gifpath"))
-        cover.src = cover.getAttribute("gifpath");
-    });
-    items[i].addEventListener(
-      "mouseout",
-      () => (cover.src = cover.getAttribute("imgpath"))
-    );
+    playGif(items[i], false);
+    items[i].addEventListener("mouseover", () => playGif(items[i], true));
+    items[i].addEventListener("mouseout", () => playGif(items[i], false));
   }
 }
 
 window.addEventListener("DOMContentLoaded", initiatePortfolioHoverEffect);
+
+function simulateHover(pfitem, activate) {
+  const hovered = "hovered";
+  if (activate) {
+    pfitem.classList.add(hovered);
+    playGif(pfitem, true);
+  } else {
+    pfitem.classList.remove(hovered);
+    playGif(pfitem, false);
+  }
+}
+
+function getTopmostVisibleElement(elements) {
+  var navbarHeight = document.getElementById("mainNav").offsetHeight;
+  var topmostVisibleElement = null;
+  for (let i = 0; i < elements.length; i++) {
+    var rect = elements[i].getBoundingClientRect();
+    if (rect.top >= navbarHeight - 10 && rect.bottom <= window.innerHeight) {
+      if (
+        !topmostVisibleElement ||
+        rect.top < topmostVisibleElement.getBoundingClientRect().top
+      ) {
+        topmostVisibleElement = elements[i];
+      }
+    }
+  }
+  return topmostVisibleElement;
+}
+
+function initAutoHoverOnMobile() {
+  const touchscreen =
+    /Android|webOS|iPhone|iPad|iPod|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    );
+  const smallscreen = window.matchMedia(
+    "only screen and (max-width: 767px)"
+  ).matches;
+
+  if (touchscreen && smallscreen) {
+    var items = document.getElementsByClassName("portfolio-item");
+    for (let i = 0; i < items.length; i++)
+      items[i].style.transition = "scale 0.4s ease-out";
+    var debounceTimer;
+    document.addEventListener("scroll", () => {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        console.log("scrolling");
+        var closestDistance = Number.MAX_VALUE;
+        var hoveredElement = getTopmostVisibleElement(items);
+        for (let i = 0; i < items.length; i++) simulateHover(items[i], false);
+        simulateHover(hoveredElement, true);
+      }, 200);
+    });
+  }
+}
+
+window.addEventListener("DOMContentLoaded", initAutoHoverOnMobile);

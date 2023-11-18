@@ -40,7 +40,7 @@ h4,
 h5,
 h6 {
   font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   font-weight: 700;
 }
 hr.star-light,
@@ -222,19 +222,52 @@ section.success {
   scale: 95%;
   transition: scale 0.18s ease-out;
 }
-#portfolio .portfolio-item:hover {
-  scale: 105%;
+#portfolio .portfolio-item:hover, #portfolio .portfolio-item.hovered {
+  scale: 100%;
 }
-#portfolio .portfolio-item > a > img {
+#portfolio .portfolio-text {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 35%;
+  text-align: center;
+  pointer-events: none;
+  font-size: 4em;
+  font-weight: 400;
+  display: inline-block;
+  margin: auto;
+  color: #eeeb;
+  text-shadow: -1px -1px 0 #0004, 1px 1px 0 #fff4, 0px 0px 5px #0004;
+  transition: color 0.18s ease-in, text-shadow 0.18s ease-in;
+}
+#portfolio .portfolio-item:hover .portfolio-text {
+  color: #eee0;
+  text-shadow: none;
+}
+#portfolio .portfolio-cover-container {
   border-radius: 25px;
+  box-shadow: 0px 10px 10px #4448;
+  outline: #444 solid 1px;
+  overflow: hidden;
+}
+#portfolio .portfolio-item:hover .portfolio-cover-container {
   outline: #444 solid 3px;
+  transition: outline 0.18s linear;
   box-shadow: 0px 0px 10px #4444;
+}
+#portfolio .portfolio-item img {
+  filter: blur(1px) brightness(65%);
+  transition: filter 0.18s linear;
+}
+#portfolio .portfolio-item:hover img {
+  filter: none;
 }
 #portfolio .portfolio-item .portfolio-link {
   display: block;
   position: relative;
   max-width: 400px;
   margin: 0 auto;
+  height: 100%;
 }
 #portfolio * {
   z-index: 2;
@@ -551,22 +584,11 @@ fieldset[disabled] .btn-success.active {
   transform:translateX(-217px);
   width: 100%;
   height: 100%;
-  background: url('resources/Carousel\ Overlay.png') left/contain no-repeat;
-}
-.static {
-  position: absolute;
-  background: white;
+  background: url('resources/carousel/Overlay.png') left/contain no-repeat;
 }
 
-.static:hover {
-  opacity: 0;
+@media (max-width: 991px) and (min-width: 768px) {
+  .row >  .portfolio-item {
+    width: 50%;
+  }
 }
-
-/* @media (max-width: 768px) {
-  body {
-    font-size: 24px;
-  }
-  section h2, .portfolio-modal .modal-content h2 {
-    font-size: 2em;
-  }
-} */
