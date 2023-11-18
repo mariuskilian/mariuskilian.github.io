@@ -12,6 +12,11 @@
       href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"
     />
     <link rel="stylesheet" href="./style.css" />
+
+    <script
+    type="module"
+    src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@2/dist/zero-md.min.js"
+    ></script>
   </head>
   <body>
     <base target="_blank">
@@ -31,7 +36,7 @@
               data-toggle="collapse"
               data-target="#bs-example-navbar-collapse-1"
             >
-              <span class="sr-only">Toggle navigation</span> Menu
+              <span class="sr-only">Toggle navigation</span>
               <i class="fa fa-bars"></i>
             </button>
             <a class="navbar-brand" href="#page-top"><svg xmlns="http://www.w3.org/2000/svg" height="24" fill="currentColor" class="bi bi-house-fill home" viewBox="0 0 16 16">
@@ -409,7 +414,11 @@
                     alt=""
                   />
                   <p style="text-align:left">
-                    <zero-md src= "writeups/poke-arena/Project.md"></zero-md>
+                    <zero-md src= "writeups/poke-arena/Project.md">
+                      <template data-merge="append">
+                        <link rel="stylesheet" href="writeups/md-custom.css" />
+                      </template>
+                    </zero-md>
                   </p>
                   <ul class="list-inline item-details">
                     <li>
@@ -809,7 +818,6 @@
     <!-- Lightweight client-side loader that feature-detects and load polyfills only when necessary -->
     <script src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2/webcomponents-loader.min.js"></script>
     <!-- Load the element definition -->
-    <script type="module" src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@1/src/zero-md.min.js"></script>
     <!-- partial -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>

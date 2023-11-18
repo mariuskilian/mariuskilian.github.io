@@ -29,7 +29,7 @@ a:hover,
 a:focus,
 a:active,
 a.active {
-  color: #18bc9c;
+  color: LightSlateGray;
   outline: none;
 }
 h1,
@@ -65,7 +65,7 @@ hr.star-light {
   border-color: white;
 }
 hr.star-light:after {
-  background-color: #18bc9c;
+  background-color: LightSlateGray;
   color: white;
 }
 hr.star-primary {
@@ -80,13 +80,15 @@ hr.star-primary:after {
 }
 header {
   text-align: center;
-  background: #18bc9c;
+  background: LightSlateGray;
   color: white;
-  box-shadow: 0px 2px 5px black;
 }
 header .container {
-  padding-top: 87px;
-  padding-bottom: 33px;
+  padding-top: 70px;
+  padding-bottom: 0px;
+}
+.gallery {
+  box-shadow: 0px 2px 5px black;
 }
 header img {
   display: block;
@@ -145,7 +147,7 @@ header .intro-text .skills {
   color: white;
 }
 .navbar-custom .navbar-nav li a:hover {
-  color: #18bc9c;
+  color: LightSlateGray;
   outline: none;
 }
 .navbar-custom .navbar-nav li a:focus,
@@ -154,13 +156,13 @@ header .intro-text .skills {
 }
 .navbar-custom .navbar-nav li.active a {
   color: white;
-  background: #18bc9c;
+  background: LightSlateGray;
 }
 .navbar-custom .navbar-nav li.active a:hover,
 .navbar-custom .navbar-nav li.active a:focus,
 .navbar-custom .navbar-nav li.active a:active {
   color: white;
-  background: #18bc9c;
+  background: LightSlateGray;
 }
 .navbar-custom .navbar-toggle {
   color: white;
@@ -170,9 +172,9 @@ header .intro-text .skills {
 }
 .navbar-custom .navbar-toggle:hover,
 .navbar-custom .navbar-toggle:focus {
-  background-color: #18bc9c;
+  background-color: LightSlateGray;
   color: white;
-  border-color: #18bc9c;
+  border-color: LightSlateGray;
 }
 @media (min-width: 768px) {
   .navbar-custom {
@@ -202,7 +204,7 @@ section h2 {
   font-size: 3em;
 }
 section.success {
-  background: #18bc9c;
+  background: LightSlateGray;
   color: white;
 }
 @media (max-width: 767px) {
@@ -285,7 +287,7 @@ section.success {
   opacity: 1;
 }
 .floating-label-form-group-with-focus label {
-  color: #18bc9c;
+  color: LightSlateGray;
 }
 form .row:first-child .floating-label-form-group {
   border-top: 1px solid #eeeeee;
@@ -319,7 +321,7 @@ footer .footer-below {
 .btn-outline:focus,
 .btn-outline:active,
 .btn-outline.active {
-  color: #18bc9c;
+  color: LightSlateGray;
   background: white;
   border: solid 2px white;
 }
@@ -367,8 +369,8 @@ fieldset[disabled] .btn-primary.active {
 }
 .btn-success {
   color: white;
-  background-color: #18bc9c;
-  border-color: #18bc9c;
+  background-color: LightSlateGray;
+  border-color: LightSlateGray;
   font-weight: 700;
 }
 .btn-success:hover,
@@ -400,11 +402,11 @@ fieldset[disabled] .btn-success:active,
 .btn-success.disabled.active,
 .btn-success[disabled].active,
 fieldset[disabled] .btn-success.active {
-  background-color: #18bc9c;
-  border-color: #18bc9c;
+  background-color: LightSlateGray;
+  border-color: LightSlateGray;
 }
 .btn-success .badge {
-  color: #18bc9c;
+  color: LightSlateGray;
   background-color: white;
 }
 .btn-social {
@@ -557,4 +559,10 @@ fieldset[disabled] .btn-success.active {
 
 .static:hover {
   opacity: 0;
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 24px;
+  }
 }

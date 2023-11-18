@@ -1,0 +1,9 @@
+@media (max-width: 768px) {
+    .markdown-body > p {
+        font-size: 24px;
+    }
+
+    div > details {
+        font-size: 24px;
+    }
+}

@@ -335,12 +335,6 @@ These are some topics I didn't yet have the time to write about and want to add 
     }
   }
 
-  @media (max-width: 768px) {
-    body {
-      font-size: 24px;
-    }
-  }
-
   .clear {
     clear: both;
   }
@@ -384,5 +378,15 @@ These are some topics I didn't yet have the time to write about and want to add 
 
   .no-link::before {
     content: attr(csname) ".cs";
+  }
+
+  @media (max-width: 768px) {
+    body {
+      font-size: 200%;
+    }
+    
+    zero-md {
+      scale: 200%;
+    }
   }
 </style>
