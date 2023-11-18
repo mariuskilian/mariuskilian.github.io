@@ -233,14 +233,14 @@ section.success {
   text-align: center;
   pointer-events: none;
   font-size: 4em;
-  font-weight: 400;
+  font-weight: 200;
   display: inline-block;
   margin: auto;
   color: #eeeb;
   text-shadow: -1px -1px 0 #0004, 1px 1px 0 #fff4, 0px 0px 5px #0004;
   transition: color 0.18s ease-in, text-shadow 0.18s ease-in;
 }
-#portfolio .portfolio-item:hover .portfolio-text {
+#portfolio .portfolio-item:hover .portfolio-text, #portfolio .portfolio-item.hovered .portfolio-text {
   color: #eee0;
   text-shadow: none;
 }
@@ -250,16 +250,38 @@ section.success {
   outline: #444 solid 1px;
   overflow: hidden;
 }
-#portfolio .portfolio-item:hover .portfolio-cover-container {
+#portfolio .portfolio-item:hover .portfolio-cover-container, #portfolio .portfolio-item .portfolio-cover-container {
   outline: #444 solid 3px;
   transition: outline 0.18s linear;
   box-shadow: 0px 0px 10px #4444;
+}
+#portfolio .portfolio-cover-container.show-clickable::before,
+#portfolio .portfolio-cover-container.show-clickable::after {
+  position: absolute;
+  right: 1em;
+  bottom: 1em;
+  scale: 0%;
+  z-index: 2;
+  transition: scale 0.2s ease-in 0s;
+}
+#portfolio .portfolio-cover-container.show-clickable::before {
+  content: url(resources/portfolios/hand-index-thumb-fill.svg);
+  filter: invert(100%) brightness(90%);
+}
+#portfolio .portfolio-cover-container.show-clickable::after {
+  content: url(resources/portfolios/hand-index-thumb.svg);
+  filter: brightness(50%);
+}
+#portfolio .portfolio-item.hovered .portfolio-cover-container.show-clickable::before,
+#portfolio .portfolio-item.hovered .portfolio-cover-container.show-clickable::after  {
+  scale: 150%;
+  transition: scale 0.2s ease-out 2s;
 }
 #portfolio .portfolio-item img {
   filter: blur(1px) brightness(65%);
   transition: filter 0.18s linear;
 }
-#portfolio .portfolio-item:hover img {
+#portfolio .portfolio-item:hover img, #portfolio .portfolio-item.hovered img {
   filter: none;
 }
 #portfolio .portfolio-item .portfolio-link {

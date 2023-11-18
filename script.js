@@ -236,8 +236,13 @@ function initAutoHoverOnMobile() {
 
   if (touchscreen && smallscreen) {
     var items = document.getElementsByClassName("portfolio-item");
-    for (let i = 0; i < items.length; i++)
+    for (let i = 0; i < items.length; i++) {
       items[i].style.transition = "scale 0.4s ease-out";
+      var coverContainer = items[i].getElementsByClassName(
+        "portfolio-cover-container"
+      )[0];
+      coverContainer.classList.add("show-clickable");
+    }
     var debounceTimer;
     document.addEventListener("scroll", () => {
       clearTimeout(debounceTimer);
@@ -247,7 +252,7 @@ function initAutoHoverOnMobile() {
         var hoveredElement = getTopmostVisibleElement(items);
         for (let i = 0; i < items.length; i++) simulateHover(items[i], false);
         simulateHover(hoveredElement, true);
-      }, 200);
+      }, 500);
     });
   }
 }
