@@ -1,5 +1,7 @@
 // Freelancer Theme JavaScript
 
+var topPadding = 110;
+
 (function ($) {
   ("use strict"); // Start of use strict
 
@@ -10,7 +12,7 @@
       .stop()
       .animate(
         {
-          scrollTop: $($anchor.attr("href")).offset().top - 50,
+          scrollTop: $($anchor.attr("href")).offset().top - topPadding,
         },
         1250,
         "easeInOutExpo"
@@ -224,6 +226,15 @@ function getTopmostVisibleElement(elements) {
   }
   return topmostVisibleElement;
 }
+
+function calcTopPadding() {
+  topPadding = window.matchMedia("only screen and (max-width: 767px)").matches
+    ? 60
+    : 110;
+}
+
+window.addEventListener("DOMContentLoaded", calcTopPadding);
+window.addEventListener("resize", calcTopPadding);
 
 function initAutoHoverOnMobile() {
   const touchscreen =
