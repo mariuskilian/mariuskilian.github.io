@@ -1,4 +1,6 @@
-<div class="markdown-begin"></div>
+<br />
+
+<img src="resources/writeups/poke-arena/banner.gif" alt="Banner" class="banner-image shadow">
 
 This project, titled Poké-Arena, is the combination of my love for auto-battler games, such as [Auto Chess](https://ac.dragonest.com/en) or [Teamfight Tactics](https://teamfighttactics.leagueoflegends.com/en-gb/), and [Pokémon](https://www.pokemon.com/uk) games from my childhood. I realized that Pokémon and their natural traits and evolution mechanic would be very well suited for the genre, and started working on my own version of it. It is the biggest project I've attempted by myself, which is why this write-up is rather long, even though I still tried to only pick out the interesting bits.
 
@@ -298,90 +300,3 @@ These are some topics I didn't yet have the time to write about and want to add 
 [`PlayerBoardMan`]: https://github.com/mariuskilian/Poke-Arena/blob/master/Assets/Scripts/Server/PerPlayer/PlayerManagers/PlayerBoardMan.cs
 [`PlayerManager`]: https://github.com/mariuskilian/Poke-Arena/blob/master/Assets/Scripts/Server/PerPlayer/PlayerManager.cs
 [`ClientGlobalEventMan`]: https://github.com/mariuskilian/Poke-Arena/blob/master/Assets/Scripts/Client/ClientGlobalEventMan.cs
-
-<!-- CSS -->
-
-<style>
-  p {
-    text-align: justify;
-  }
-
-  h2, h3, h4 {
-    display: inline;
-  -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Old versions of Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome, Edge, Opera and Firefox */
-    cursor: pointer;
-  }
-
-  summary > h3 {
-    display: inline;
-  }
-
-  details > details {
-    margin-left: 1em;
-  }
-
-  .image-container {
-    float: right;
-    margin: 0.1em 0 0.1em 1em;
-  }
-
-  @media (max-width: 599px) {
-    .image-container {
-        float: none;
-        text-align: center;
-        margin-left: 0; 
-    }
-  }
-
-  .clear {
-    clear: both;
-  }
-
-  .code-snippet {
-    width: 100%;
-    padding-top: 0.25em;
-    padding-bottom: 0.25em;
-    margin-bottom: -0.5em;
-    background-color: lightgray;
-    border-radius: 5px 5px 0 0;
-  }
-
-  .code-snippet > a {
-    position: relative;
-    display: block;
-    color: lightgray;
-    select:none;
-  }
-
-  .code-snippet:not(.no-link) > a:hover {
-    color: lightblue;
-  }
-
-  .code-snippet > a:focus {
-    outline: none;
-  }
-
-  .code-snippet:not(.no-link):hover {
-    background-color: lightblue;
-    cursor: pointer;
-  }
-
-  .code-snippet::before {
-    position: absolute;
-    content: attr(csname) ".cs " url(resources/writeups/poke-arena/box-arrow-up-right.svg);
-    margin-left: 1em;
-    color: #555;
-    font-family: monospace;
-    font-weight: bold;
-  }
-
-  .no-link::before {
-    content: attr(csname) ".cs";
-  }
-</style>
