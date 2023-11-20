@@ -627,3 +627,24 @@ fieldset[disabled] .btn-success.active {
     width: 50%;
   }
 }
+
+#about {
+  transition: height 2s linear;
+}
+
+#dots > a {
+  color: #2c3e50;
+  text-decoration: underline;
+}
+#dots > a:hover {
+  color: #2c3e50;
+  text-decoration: none;
+}
+
+#cv-frame {
+  width: 100%;
+  aspect-ratio:1/1.292;
+  height: 0;
+  scale: 0;
+  transition: scale 1s ease-in-out;
+}

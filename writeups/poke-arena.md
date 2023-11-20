@@ -1,4 +1,4 @@
-<br />
+<br>
 
 <img src="resources/writeups/poke-arena/banner.gif" alt="Banner" class="centered banner shadow">
 
@@ -7,7 +7,7 @@ This project, titled Poké-Arena, is the combination of my love for auto-battler
 <details>
   <summary>
     <h2>Background</h2>
-  </summary><br />
+  </summary><br>
 
 This project started from a passion for the underlying games and genres, as well as for game development. Due to licensing issues this would create with the Pokémon trademark, I never intended to publish this game, and always saw it more as a hobby project and learning experience.
 
@@ -20,7 +20,7 @@ As this was something I had never tackled before, and I wanted to make as good o
 <details>
   <summary>
     <h2>Netcode</h2>
-  </summary><br />
+  </summary><br>
 
 To get started on the netcode, something I had never tackled before this project, I researched different multiplayer engines for Unity, and ended up settling on the [Photon Multiplayer Engine](https://www.photonengine.com), specifically [Photon Bolt](https://doc.photonengine.com/bolt/current/getting-started/overview#) (now [Photon Fusion](https://doc.photonengine.com/fusion/current/getting-started/fusion-intro)). As a native Unity Asset, this offered great functionality for creating true multiplayer games, such as matchmaking, server & client separation, an authoritative server with client-side prediction, and more.
 
@@ -41,7 +41,7 @@ This clip shows an example of two clients running through Bolt's built-in debug 
 <details open>
   <summary>
     <h2>Client-Side Prediction</h2>
-  </summary><br />
+  </summary><br>
 
 The netcode also features client-side prediction. While a game like this does not require highly complex client-side prediction, it can still provide a smoother user experience in some cases. For example, when a player picks up a unit to place it somewhere else on the board, that action should be instantly reflected, and shouldn't first have to be confirmed by the server, so that the action remains responsive for the user.
 
@@ -56,14 +56,14 @@ This clip shows exactly that, where a unit that is picked up is handled immediat
 <details>
   <summary>
     <h2>Manager Classes</h2>
-  </summary><br />
+  </summary><br>
 
 I decided to go with a number of manager classes to handle general gameplay logic, such as [`InputMan`], [`UIMan`] or more niche ones like [`PlayerEvolutionMan`]. These are mostly classes of which only one instance is necessary, which is why I opted to implement them using the [Singleton Design Pattern](https://en.wikipedia.org/wiki/Singleton_pattern), which limits the number of instances of the class to one, while allowing global access to the instance. This was particularly useful in combination with the heavy use of events in this project, as subscribing to events from these manager classes could now be performed seamlessly.
 
 <details open>
   <summary>
     <h3>Naming and Hierarchy</h3>
-  </summary><br />
+  </summary><br>
 
 The manager classes having the `Player` prefix are all scripts that are run server-side with one instance per player, and are components of Player game objects in Unity. For example, in an 8-player game, the server holds 8 instances of [`PlayerLevelMan`], 8 instances of [`PlayerFinanceMan`], 8 instances of [`PlayerBoardMan`], and so forth. All of these managers inherit from the [`PlayerManager`] class, which provides simple common functionality _(the inheritance from `GlobalEventListener` is due to the Photon Bolt Framework, explained in the [Global Events](#global-events) section)_.
 
@@ -88,12 +88,12 @@ public class PlayerManager : GlobalEventListener {
 <details>
   <summary>
     <h2>Event System</h2>
-  </summary><br />
+  </summary><br>
 
 <details>
   <summary>
     <h3>Local Events</h3>
-  </summary><br />
+  </summary><br>
 
 Within the project, many components respond reactively to something another component triggers. For this, I use C# [Actions](https://learn.microsoft.com/en-us/dotnet/api/system.action-1?view=net-7.0), a specific type of [Delegates](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/) with a `void` return type. This allows a _publisher_ to send out an event, and all _subscribers_ to respond, allowing the publisher to determine the time of the execution, and the subscribers to determine the specific behavior. With the way they are used in this project, nothing needs to be returned since this type of communication is one-way, which is why the `void` return type is enough.
 
@@ -147,7 +147,7 @@ This is just one of the ways the different components interact each other. The m
 <details>
   <summary>
     <h3>Global Events</h3>
-  </summary><br />
+  </summary><br>
 
 <div class="image-container inline-right">
   <img src="resources/writeups/poke-arena/bolt-events.png" alt="Bolt Events UI"> <!-- Adjust width as needed -->
@@ -198,14 +198,14 @@ Server-side, handling global events is done on a class-by class basis, meaning t
 <details>
   <summary>
     <h3>Bridging Local and Global Events</h3>
-  </summary><br />
+  </summary><br>
 
 A lot of reactions to events happen client-side. For example, as the server updates the game state, it will send out this information as a global event to the clients, which then have to react accordingly, in order to display the correct game state. This includes the units that are in the store, unit repositions, evolutions, some animations and more. This can be for both: units that a given client owns (their own playable units); and other players' units, as all clients should update the positions and state of all players' units. For this, I created a client-side class called [`ClientGlobalEventMan`] to handle the communication between global and local events.
 
 <details open>
   <summary>
     <h4>Global &rarr; Local</h4>
-  </summary><br />
+  </summary><br>
 
 To handle incoming global Bolt events, each global event is handled, and a local event is invoked, which is then handled normally by the rest of the client codebase. In some cases, some extra steps are taken, like when the `StoreNewStoreEvent` is triggered, receiving the Bolt Entities (entities that exist in the network) with the network IDs passed by the global event (`evnt.UnitX`), to receive the actual units, which are then passed to the local event.
 
@@ -237,7 +237,7 @@ public override void OnEvent(StoreUnitCaughtEvent evnt) { UnitCaughtEvent?.Invok
 <details open>
   <summary>
     <h4>Local &rarr; Global</h4>
-  </summary><br />
+  </summary><br>
 
 Local events that need to be sent globally are handled similarly. They are subscribed to as described in the earlier [Local Events](#local-events) section. Here's the code snippet for this subscription, as a bit of a recap.
 
@@ -300,7 +300,7 @@ private void HandleUnitDeselectEvent(BoardUnit unit, Vector3 clickPos, bool clic
 <details>
   <summary>
     <h2>Future Sections</h2>
-  </summary><br />
+  </summary><br>
 
 These are some topics I didn't yet have the time to write about and want to add to this page in the future:
 
