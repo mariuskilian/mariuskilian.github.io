@@ -1,6 +1,6 @@
 <br />
 
-<img src="resources/writeups/poke-arena/banner.gif" alt="Banner" class="banner-image shadow">
+<img src="resources/writeups/poke-arena/banner.gif" alt="Banner" class="centered banner shadow">
 
 This project, titled Poké-Arena, is the combination of my love for auto-battler games, such as [Auto Chess](https://ac.dragonest.com/en) or [Teamfight Tactics](https://teamfighttactics.leagueoflegends.com/en-gb/), and [Pokémon](https://www.pokemon.com/uk) games from my childhood. I realized that Pokémon and their natural traits and evolution mechanic would be very well suited for the genre, and started working on my own version of it. It is the biggest project I've attempted by myself, which is why this write-up is rather long, even though I still tried to only pick out the interesting bits.
 
@@ -34,6 +34,23 @@ I looked into what makes good netcode, and quickly decided on a fully separate s
 
 Either of the above lines above can be added as an annotation just before a class declaration to allow Bolt to automatically create an instance of the class which lives together with Bolt. Adding `BoltNetworkModes.Server` or `BoltNetworkModes.Client` as a parameter makes such an instance only be created on the Server or Client, respectively. Omitting it instantiates it on both Server and Client.
 
+<img src="resources/writeups/poke-arena/netcode-basic.gif" alt="Netcode Example" class="centered banner shadow">
+
+This clip shows an example of two clients running through Bolt's built-in debug mode, allowing multiple windows to run as server or clients, as desired. In this example, the two visible clients are direct opponents, meaning they share a board. Purchasing a unit on one client can be seen on the opposite end of the other client's screen. All actions, including evolutions and their animations, trigger on all clients.
+
+<details open>
+  <summary>
+    <h2>Client-Side Prediction</h2>
+  </summary><br />
+
+The netcode also features client-side prediction. While a game like this does not require highly complex client-side prediction, it can still provide a smoother user experience in some cases. For example, when a player picks up a unit to place it somewhere else on the board, that action should be instantly reflected, and shouldn't first have to be confirmed by the server, so that the action remains responsive for the user.
+
+<img src="resources/writeups/poke-arena/netcode-client-side-prediction.gif" alt="Netcode Example" class="centered banner shadow">
+
+This clip shows exactly that, where a unit that is picked up is handled immediately on the client. Only when the unit is placed on a slot on the board, does the server get involved, confirming whether the move is possible, before updating all clients. This also works for swapping two units' places, as also seen in the clip. All these positional updates are received and shown by the other client(s) as well.
+
+</details>
+
 <hr></details>
 
 <details>
@@ -43,7 +60,7 @@ Either of the above lines above can be added as an annotation just before a clas
 
 I decided to go with a number of manager classes to handle general gameplay logic, such as [`InputMan`], [`UIMan`] or more niche ones like [`PlayerEvolutionMan`]. These are mostly classes of which only one instance is necessary, which is why I opted to implement them using the [Singleton Design Pattern](https://en.wikipedia.org/wiki/Singleton_pattern), which limits the number of instances of the class to one, while allowing global access to the instance. This was particularly useful in combination with the heavy use of events in this project, as subscribing to events from these manager classes could now be performed seamlessly.
 
-<details>
+<details open>
   <summary>
     <h3>Naming and Hierarchy</h3>
   </summary><br />
@@ -54,13 +71,13 @@ The manager classes having the `Player` prefix are all scripts that are run serv
 
 ```cs
 public class PlayerManager : GlobalEventListener {
-    protected Player player;
+  protected Player player;
 
-    protected void Awake() { player = GetComponent<Player>(); }
+  protected void Awake() { player = GetComponent<Player>(); }
 
-    public bool IsThisPlayer(BoltConnection connection) {
-        return player.Connection == connection;
-    }
+  public bool IsThisPlayer(BoltConnection connection) {
+    return player.Connection == connection;
+  }
 }
 ```
 
@@ -92,20 +109,20 @@ Further, some components need to react to a high variety of different publishers
 
 ```cs
 private void SubscribeLocalEventHandlers() {
-    var global = ClientGlobalEventMan.Instance;
-    global.GameStartEvent += HandleGameStartEvent;
-    global.UnitCaughtEvent += HandleUnitCaughtEvent;
-    global.NewStoreEvent += HandleNewStoreEvent;
+  var global = ClientGlobalEventMan.Instance;
+  global.GameStartEvent += HandleGameStartEvent;
+  global.UnitCaughtEvent += HandleUnitCaughtEvent;
+  global.NewStoreEvent += HandleNewStoreEvent;
 
-    var selection = SelectionMan.Instance;
-    selection.UnitSelectEvent += HandleUnitSelectEvent;
-    selection.UnitDeselectOnBoardBenchEvent += HandleUnitDeselectEvent;
+  var selection = SelectionMan.Instance;
+  selection.UnitSelectEvent += HandleUnitSelectEvent;
+  selection.UnitDeselectOnBoardBenchEvent += HandleUnitDeselectEvent;
 
-    var input = InputMan.Instance;
-    input.ToggleStoreEvent += HandleToggleStoreEvent;
+  var input = InputMan.Instance;
+  input.ToggleStoreEvent += HandleToggleStoreEvent;
 
-    var store = ClientStoreMan.Instance;
-    store.UnitArrivedInStoreEvent += HandleUnitArrivedInStoreEvent;
+  var store = ClientStoreMan.Instance;
+  store.UnitArrivedInStoreEvent += HandleUnitArrivedInStoreEvent;
 }
 ```
 
@@ -132,8 +149,8 @@ This is just one of the ways the different components interact each other. The m
     <h3>Global Events</h3>
   </summary><br />
 
-<div class="image-container">
-  <img src="resources/writeups/poke-arena/BoltEvents.png" alt="Bolt Events UI" width="300"> <!-- Adjust width as needed -->
+<div class="image-container inline-right">
+  <img src="resources/writeups/poke-arena/bolt-events.png" alt="Bolt Events UI"> <!-- Adjust width as needed -->
 </div>
 
 Some events required communication between two separate instances, generally server to one or more clients, or a client to the server. For these, I used Photon Bolt's event system. For this, I had to first create all necessary events using Bolt's UI within Unity, to then allow Bolt to compile these events into interfaces, which are inherited by the `GlobalEventListener` Bolt class, which is supplied with several methods of type `public virtual void OnEvent`, with a single parameter as the type of event. These `OnEvent` methods then have to be overridden by a class trying to react to the event. This code snippet shows these compiled methods being created:
@@ -143,33 +160,38 @@ Some events required communication between two separate instances, generally ser
 <div class="code-snippet no-link" csname="GlobalEventListener"><a>⠀</a></div>
 
 ```cs
-public class GlobalEventListener : GlobalEventListenerBase, IStoreNewStoreEventListener, IStoreUnitCaughtEventListener, IClientEventManInitializedEventListener, IClientTryCatchUnitEventListener, IClientTryRerollStoreEventListener, IClientUnitDeselectEventListener, IClientTryBuyExpEventListener, IGameStartEventListener
+public class GlobalEventListener : GlobalEventListenerBase, IStoreNewStoreEventListener, IStoreUnitCaughtEventListener, IClientEventManInitializedEventListener,
+  IClientTryCatchUnitEventListener, IClientTryRerollStoreEventListener, IClientUnitDeselectEventListener, IClientTryBuyExpEventListener, IGameStartEventListener
 {
-    public virtual void OnEvent(StoreNewStoreEvent evnt) { }
-    public virtual void OnEvent(StoreUnitCaughtEvent evnt) { }
-    public virtual void OnEvent(ClientEventManInitializedEvent evnt) { }
-    public virtual void OnEvent(ClientTryCatchUnitEvent evnt) { }
-    public virtual void OnEvent(ClientTryRerollStoreEvent evnt) { }
-    public virtual void OnEvent(ClientUnitDeselectEvent evnt) { }
-    public virtual void OnEvent(ClientTryBuyExpEvent evnt) { }
-    public virtual void OnEvent(GameStartEvent evnt) { }
+  public virtual void OnEvent(StoreNewStoreEvent evnt) { }
+  public virtual void OnEvent(StoreUnitCaughtEvent evnt) { }
+  public virtual void OnEvent(ClientEventManInitializedEvent evnt) { }
+  public virtual void OnEvent(ClientTryCatchUnitEvent evnt) { }
+  public virtual void OnEvent(ClientTryRerollStoreEvent evnt) { }
+  public virtual void OnEvent(ClientUnitDeselectEvent evnt) { }
+  public virtual void OnEvent(ClientTryBuyExpEvent evnt) { }
+  public virtual void OnEvent(GameStartEvent evnt) { }
 }
 ```
 
-Classes that wish to send or react to these events need to inherit from `GlobalEventListener`, such as this example of the [`PlayerLevelMan`], which handles the players experience level. This is a server-side component, with one instance for each player, and inherits from [`PlayerManager`], which, as described in the [Naming and Hierarchy](#naming-and-hierarchy) section, inherits from `GlobalEventListener`.
+Classes that wish to send or react to these events need to inherit from `GlobalEventListener`, such as the following example of the [`PlayerLevelMan`], which handles the players experience level. This is a server-side component, with one instance for each player, and inherits from [`PlayerManager`], which, as described in the [Naming and Hierarchy](#naming-and-hierarchy) section, inherits from `GlobalEventListener`, and runs server-side with one instance per player. It receives the global event that a client triggers when attempting to purchase experience points from money, named `ClientTryBuyExpEvent`, and first checks that this instance of [`PlayerLevelMan`] is the one responsible for the player that triggered the event.
 
 <div class="code-snippet" csname="PlayerLevelMan"><a target="_blank" href="https://github.com/mariuskilian/Poke-Arena/blob/f27d920b8b45b620df1d2a126aa1b886bdc6777d/Assets/Scripts/Server/PerPlayer/PlayerManagers/ResourceManagers/PlayerLevelMan.cs#L18">⠀</a></div>
 
 ```cs
 public override void OnEvent(ClientTryBuyExpEvent evnt) {
-    if (!IsThisPlayer(evnt.RaisedBy)) return;
-    if (Level == MaxLevel) return;
-    if (!player.GetPlayerMan<PlayerFinanceMan>().TryBuyExp()) return;
-    AddExp(ExpPerBuy);
+  if (!IsThisPlayer(evnt.RaisedBy)) return;
+  if (Level == MaxLevel) return;
+  if (!player.GetPlayerMan<PlayerFinanceMan>().TryBuyExp()) return;
+  AddExp(ExpPerBuy);
 }
 ```
 
-Server-side, this is handled on an individual class-by class basis, as the server does not require much local event communication. However, the clients do, which is why it was important to come up with a system to bridge local and global events while keeping the code readable and maintainable.
+The second guard clause checks whether the player already achieved the maximum level, in which case experience also could no longer be bought. If the guard clause gets passed, the player can attempt to buy experience. However, this is only possible if the player has enough money to buy the experience. Therefore, the method then gets the [`PlayerFinanceMan`], using a custom `GetPlayerMan` method that the player instance has. This allows quick access to any wanted [`PlayerManager`] class. 
+
+The `TryBuyExp()` method of the player's [`PlayerFinanceMan`] class is then called, which attempts to spend the money necessary for buying experience, and returns whether it was successful. If it was successful, the money is already spent, and the experience is added to the player.
+
+Server-side, handling global events is done on a class-by class basis, meaning that they are handled directly in the classes that need to react to the global events. This is, because most global events only trigger individual classes, and don't require a long list of classes to react to events. However, the clients do, which is why it was important to come up with a system to bridge local and global events while keeping the code readable and maintainable.
 
 <hr></details>
 
@@ -180,7 +202,7 @@ Server-side, this is handled on an individual class-by class basis, as the serve
 
 A lot of reactions to events happen client-side. For example, as the server updates the game state, it will send out this information as a global event to the clients, which then have to react accordingly, in order to display the correct game state. This includes the units that are in the store, unit repositions, evolutions, some animations and more. This can be for both: units that a given client owns (their own playable units); and other players' units, as all clients should update the positions and state of all players' units. For this, I created a client-side class called [`ClientGlobalEventMan`] to handle the communication between global and local events.
 
-<details>
+<details open>
   <summary>
     <h4>Global &rarr; Local</h4>
   </summary><br />
@@ -197,14 +219,14 @@ public Action<int> UnitCaughtEvent;
 public override void OnEvent(GameStartEvent evnt) { GameStartEvent?.Invoke(); }
 
 public override void OnEvent(StoreNewStoreEvent evnt) {
-    StoreUnit[] Units = {
-        BoltNetwork.FindEntity( evnt.Unit1 ).GetComponent< StoreUnit >(),
-        BoltNetwork.FindEntity( evnt.Unit2 ).GetComponent< StoreUnit >(),
-        BoltNetwork.FindEntity( evnt.Unit3 ).GetComponent< StoreUnit >(),
-        BoltNetwork.FindEntity( evnt.Unit4 ).GetComponent< StoreUnit >(),
-        BoltNetwork.FindEntity( evnt.Unit5 ).GetComponent< StoreUnit >()
-    };
-    NewStoreEvent?.Invoke(Units);
+  StoreUnit[] Units = {
+    BoltNetwork.FindEntity( evnt.Unit1 ).GetComponent< StoreUnit >(),
+    BoltNetwork.FindEntity( evnt.Unit2 ).GetComponent< StoreUnit >(),
+    BoltNetwork.FindEntity( evnt.Unit3 ).GetComponent< StoreUnit >(),
+    BoltNetwork.FindEntity( evnt.Unit4 ).GetComponent< StoreUnit >(),
+    BoltNetwork.FindEntity( evnt.Unit5 ).GetComponent< StoreUnit >()
+  };
+  NewStoreEvent?.Invoke(Units);
 }
 
 public override void OnEvent(StoreUnitCaughtEvent evnt) { UnitCaughtEvent?.Invoke(evnt.StoreIdx); }
@@ -212,7 +234,7 @@ public override void OnEvent(StoreUnitCaughtEvent evnt) { UnitCaughtEvent?.Invok
 
 </details>
 
-<details>
+<details open>
   <summary>
     <h4>Local &rarr; Global</h4>
   </summary><br />
@@ -223,15 +245,15 @@ Local events that need to be sent globally are handled similarly. They are subsc
 
 ```cs
 private void SubscribeLocalEventHandlers() {
-    var UI = UIMan.Instance;
-    UI.TryCatchUnitEvent += HandleTryCatchUnitEvent;
+  var UI = UIMan.Instance;
+  UI.TryCatchUnitEvent += HandleTryCatchUnitEvent;
 
-    var input = InputMan.Instance;
-    input.TryRerollStoreEvent += HandleTryRerollStoreEvent;
-    input.TryBuyExpEvent += HandleTryBuyExpEvent;
+  var input = InputMan.Instance;
+  input.TryRerollStoreEvent += HandleTryRerollStoreEvent;
+  input.TryBuyExpEvent += HandleTryBuyExpEvent;
 
-    var select = SelectionMan.Instance;
-    select.UnitDeselectOnBoardBenchEvent += HandleUnitDeselectEvent;
+  var select = SelectionMan.Instance;
+  select.UnitDeselectOnBoardBenchEvent += HandleUnitDeselectEvent;
 }
 ```
 
@@ -241,27 +263,31 @@ Then, each of the `Handle{...}Event` classes does its relevant setup for things 
 
 ```cs
 private void HandleTryCatchUnitEvent(int idx) {
-    var evnt = ClientTryCatchUnitEvent.Create(GlobalTargets.OnlyServer);
-    evnt.StoreIdx = idx;
-    evnt.Send();
+  var evnt = ClientTryCatchUnitEvent.Create(GlobalTargets.OnlyServer);
+  evnt.StoreIdx = idx;
+  evnt.Send();
 }
 ```
 
 ```cs
-private void HandleTryRerollStoreEvent() { ClientTryRerollStoreEvent.Create(GlobalTargets.OnlyServer).Send(); }
+private void HandleTryRerollStoreEvent() {
+  ClientTryRerollStoreEvent.Create(GlobalTargets.OnlyServer).Send();
+}
 ```
 
 ```cs
-private void HandleTryBuyExpEvent() { ClientTryBuyExpEvent.Create(GlobalTargets.OnlyServer).Send(); }
+private void HandleTryBuyExpEvent() {
+  ClientTryBuyExpEvent.Create(GlobalTargets.OnlyServer).Send();
+}
 ```
 
 ```cs
 private void HandleUnitDeselectEvent(BoardUnit unit, Vector3 clickPos, bool clickedBoard) {
-    var evnt = ClientUnitDeselectEvent.Create(GlobalTargets.OnlyServer);
-    evnt.Unit = unit.entity.NetworkId;
-    evnt.ClickPosition = clickPos;
-    evnt.ClickedBoard = clickedBoard;
-    evnt.Send();
+  var evnt = ClientUnitDeselectEvent.Create(GlobalTargets.OnlyServer);
+  evnt.Unit = unit.entity.NetworkId;
+  evnt.ClickPosition = clickPos;
+  evnt.ClickedBoard = clickedBoard;
+  evnt.Send();
 }
 ```
 
@@ -295,7 +321,6 @@ These are some topics I didn't yet have the time to write about and want to add 
 [`InputMan`]: https://github.com/mariuskilian/Poke-Arena/blob/master/Assets/Scripts/Client/InputMan.cs
 [`UIMan`]: https://github.com/mariuskilian/Poke-Arena/blob/master/Assets/Scripts/Client/UI/UIMan.cs
 [`PlayerEvolutionMan`]: https://github.com/mariuskilian/Poke-Arena/blob/master/Assets/Scripts/Server/PerPlayer/PlayerManagers/PlayerEvolutionMan.cs
-[`PlayerLevelMan`]: https://github.com/mariuskilian/Poke-Arena/blob/master/Assets/Scripts/Server/PerPlayer/PlayerManagers/ResourceManagers/PlayerLevelMan.cs
 [`PlayerFinanceMan`]: https://github.com/mariuskilian/Poke-Arena/blob/master/Assets/Scripts/Server/PerPlayer/PlayerManagers/ResourceManagers/PlayerFinanceMan.cs
 [`PlayerBoardMan`]: https://github.com/mariuskilian/Poke-Arena/blob/master/Assets/Scripts/Server/PerPlayer/PlayerManagers/PlayerBoardMan.cs
 [`PlayerManager`]: https://github.com/mariuskilian/Poke-Arena/blob/master/Assets/Scripts/Server/PerPlayer/PlayerManager.cs
