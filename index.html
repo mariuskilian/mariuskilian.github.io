@@ -172,7 +172,7 @@
               <hr class="star-light" />
             </div>
           </div>
-          <div class="row" id="show-more-scroll">
+          <div class="row" id="about-show-more-scroll">
             <div class="col-lg-8 col-lg-offset-2">
               <p style="text-align:justify">
                 My journey into Computer Science started at the prestigious KIT
@@ -187,7 +187,7 @@
                 company in Switzerland,
                 Swisscom,
                 <span id="dots" class="page-scroll">
-                  <a href="#show-more-scroll" target="_self" onclick="show_more()">show more...</a>
+                  <a href="#about-show-more-scroll" target="_self" onclick="show_more()">show more...</a>
                 </span>
                 <span id="more" style="display:none">where I lead front-end development for a brand new,
                 innovative service, which consistently impressed our stakeholders,
@@ -222,7 +222,7 @@
         <div class="container">
           <div class="row">
             <div class="col-lg-12 text-center">
-              <h2>CV</h2>
+              <h2 id="cv-show-more-scroll">CV</h2>
               <hr class="star-primary" />
             </div>
           </div>
@@ -232,7 +232,7 @@
               <ul class="nav">
                 <li class="page-scroll">
                   <div id="show-cv-btn" style="text-align: center;">
-                    <a href="#cv" target="_self" onclick="show_cv()" class="btn btn-success btn-outline page-scroll">
+                    <a href="#cv-show-more-scroll" target="_self" onclick="show_cv()" class="btn btn-success btn-outline page-scroll">
                       <i class="fa fa-eye"></i> Show
                     </a>
                   </div>
@@ -322,8 +322,8 @@
                   <hr class="star-primary" />
                   <ul class="list-inline item-details">
                     <li>
-                      <strong
-                        >February 2020 - June 2020
+                      <strong>
+                          February 2020 - June 2020
                       </strong>
                     </li><br>
                     <li>
@@ -336,7 +336,7 @@
                       </strong>
                     </li>
                   </ul>
-                  <zero-md src= "writeups/poke-arena.md">
+                  <zero-md src= "resources/writeups/poke-arena/poke-arena.md">
                     <template data-merge="append">
                       <<link rel="stylesheet" href="resources/writeups/style.css" />
                     </template>
@@ -388,7 +388,7 @@
                       </strong>
                     </li>
                   </ul>
-                    <zero-md src= "writeups/survivor0.md">
+                    <zero-md src= "resources/writeups/survivor0/survivor0.md">
                       <template data-merge="append">
                         <<link rel="stylesheet" href="resources/writeups/style.css" />
                       </template>
@@ -423,7 +423,7 @@
             <div class="row">
               <div class="col-lg-8 col-lg-offset-2">
                 <div class="modal-body">
-                  <h2>Survivor 0</h2>
+                  <h2>Tower Defense</h2>
                   <hr class="star-primary" />
                   <ul class="list-inline item-details">
                     <li>
@@ -439,7 +439,7 @@
                       </strong>
                     </li>
                   </ul>
-                    <zero-md src= "writeups/tower-defense.md">
+                    <zero-md src= "resources/writeups/tower-defense/tower-defense.md">
                       <template data-merge="append">
                         <<link rel="stylesheet" href="resources/writeups/style.css" />
                       </template>
@@ -476,6 +476,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.js"></script>
-    <script src="./script.js"></script>
+    <script src="scripts/smooth-scroll.js"></script>
+    <script src="scripts/carousel.js"></script>
+    <script src="scripts/gif-hover.js"></script>
+    <script src="scripts/show-more.js"></script>
   </body>
 </html>
