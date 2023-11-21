@@ -305,7 +305,7 @@ private void HandleUnitDeselectEvent(BoardUnit unit, Vector3 clickPos, bool clic
 These are some topics I didn't yet have the time to write about and want to add to this page in the future:
 
 - Animations
-- Shaders
+- Shaders and VFX
 - Systems
   - Board & Bench
   - Evolution
