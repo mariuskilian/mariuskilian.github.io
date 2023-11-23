@@ -1,6 +1,8 @@
 <br>
 
-<img src="resources/writeups/poke-arena/banner.gif" alt="Banner" class="centered banner shadow">
+<div class="centered wide banner shadow">
+  <img src="resources/writeups/poke-arena/banner.gif" alt="Banner">
+</div>
 
 This project, titled Poké-Arena, is the combination of my love for auto-battler games, such as [Auto Chess](https://ac.dragonest.com/en) or [Teamfight Tactics](https://teamfighttactics.leagueoflegends.com/en-gb/), and [Pokémon](https://www.pokemon.com/uk) games from my childhood. I realized that Pokémon and their natural traits and evolution mechanic would be very well suited for the genre, and started working on my own version of it. It is the biggest project I've attempted by myself, which is why this write-up is rather long, even though I still tried to only pick out the interesting bits.
 
@@ -65,7 +67,7 @@ I decided to go with a number of manager classes to handle general gameplay logi
     <h3>Naming and Hierarchy</h3>
   </summary><br>
 
-The manager classes having the `Player` prefix are all scripts that are run server-side with one instance per player, and are components of Player game objects in Unity. For example, in an 8-player game, the server holds 8 instances of [`PlayerLevelMan`], 8 instances of [`PlayerFinanceMan`], 8 instances of [`PlayerBoardMan`], and so forth. All of these managers inherit from the [`PlayerManager`] class, which provides simple common functionality _(the inheritance from `GlobalEventListener` is due to the Photon Bolt Framework, explained in the [Global Events](#global-events) section)_.
+The manager classes having the `Player` prefix are all scripts that are run server-side with one instance per player, and are components of Player game objects in Unity. For example, in an 8-player game, the server holds 8 instances of [`PlayerLevelMan`], 8 instances of [`PlayerFinanceMan`], 8 instances of [`PlayerBoardMan`], and so forth. All of these managers inherit from the [`PlayerManager`] class, which provides simple common functionality _(the inheritance from `GlobalEventListener` is due to the Photon Bolt Framework, explained in the [Global Events](#event-system/global-events) section)_.
 
 <div class="code-snippet" csname="PlayerManager"><a target="_blank" href="https://github.com/mariuskilian/Poke-Arena/blob/master/Assets/Scripts/Server/PerPlayer/PlayerManager.cs">⠀</a></div>
 
@@ -174,7 +176,7 @@ public class GlobalEventListener : GlobalEventListenerBase, IStoreNewStoreEventL
 }
 ```
 
-Classes that wish to send or react to these events need to inherit from `GlobalEventListener`, such as the following example of the [`PlayerLevelMan`], which handles the players experience level. This is a server-side component, with one instance for each player, and inherits from [`PlayerManager`], which, as described in the [Naming and Hierarchy](#naming-and-hierarchy) section, inherits from `GlobalEventListener`, and runs server-side with one instance per player. It receives the global event that a client triggers when attempting to purchase experience points from money, named `ClientTryBuyExpEvent`, and first checks that this instance of [`PlayerLevelMan`] is the one responsible for the player that triggered the event.
+Classes that wish to send or react to these events need to inherit from `GlobalEventListener`, such as the following example of the [`PlayerLevelMan`], which handles the players experience level. This is a server-side component, with one instance for each player, and inherits from [`PlayerManager`], which, as described in the [Naming and Hierarchy](#manager-classes/naming-and-hierarchy) section, inherits from `GlobalEventListener`, and runs server-side with one instance per player. It receives the global event that a client triggers when attempting to purchase experience points from money, named `ClientTryBuyExpEvent`, and first checks that this instance of [`PlayerLevelMan`] is the one responsible for the player that triggered the event.
 
 <div class="code-snippet" csname="PlayerLevelMan"><a target="_blank" href="https://github.com/mariuskilian/Poke-Arena/blob/f27d920b8b45b620df1d2a126aa1b886bdc6777d/Assets/Scripts/Server/PerPlayer/PlayerManagers/ResourceManagers/PlayerLevelMan.cs#L18">⠀</a></div>
 
@@ -204,7 +206,7 @@ A lot of reactions to events happen client-side. For example, as the server upda
 
 <details open>
   <summary>
-    <h4>Global &rarr; Local</h4>
+    <h4>Global to Local</h4>
   </summary><br>
 
 To handle incoming global Bolt events, each global event is handled, and a local event is invoked, which is then handled normally by the rest of the client codebase. In some cases, some extra steps are taken, like when the `StoreNewStoreEvent` is triggered, receiving the Bolt Entities (entities that exist in the network) with the network IDs passed by the global event (`evnt.UnitX`), to receive the actual units, which are then passed to the local event.
@@ -236,10 +238,10 @@ public override void OnEvent(StoreUnitCaughtEvent evnt) { UnitCaughtEvent?.Invok
 
 <details open>
   <summary>
-    <h4>Local &rarr; Global</h4>
+    <h4>Local to Global</h4>
   </summary><br>
 
-Local events that need to be sent globally are handled similarly. They are subscribed to as described in the earlier [Local Events](#local-events) section. Here's the code snippet for this subscription, as a bit of a recap.
+Local events that need to be sent globally are handled similarly. They are subscribed to as described in the earlier [Local Events](#event-system/local-events) section. Here's the code snippet for this subscription, as a bit of a recap.
 
 <div class="code-snippet" csname="ClientGlobalEventMan"><a target="_blank" href="https://github.com/mariuskilian/Poke-Arena/blob/f27d920b8b45b620df1d2a126aa1b886bdc6777d/Assets/Scripts/Client/ClientGlobalEventMan.cs#L46">⠀</a></div>
 

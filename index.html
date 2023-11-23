@@ -305,7 +305,7 @@
 
       <!-- Portfolio Modals -->
       <div
-        class="portfolio-modal modal fade"
+        class="portfolio-modal modal"
         id="portfolioModalPokeArena"
         tabindex="-1"
         role="dialog"
@@ -339,9 +339,9 @@
                       </strong>
                     </li>
                   </ul>
-                  <zero-md src= "resources/writeups/poke-arena/poke-arena.md">
+                  <zero-md src= "resources/writeups/poke-arena/poke-arena.md" id="MDPokeArena">
                     <template data-merge="append">
-                      <<link rel="stylesheet" href="resources/writeups/style.css" />
+                      <<link rel="stylesheet" href="resources/writeups/md-style.css" />
                     </template>
                   </zero-md>
                   <button
@@ -358,7 +358,7 @@
         </div>
       </div>
       <div
-        class="portfolio-modal modal fade"
+        class="portfolio-modal modal"
         id="portfolioModalSurvivor0"
         tabindex="-1"
         role="dialog"
@@ -391,9 +391,9 @@
                       </strong>
                     </li>
                   </ul>
-                    <zero-md src= "resources/writeups/survivor0/survivor0.md">
+                    <zero-md src= "resources/writeups/survivor0/survivor0.md" id="MDSurvivor0">
                       <template data-merge="append">
-                        <<link rel="stylesheet" href="resources/writeups/style.css" />
+                        <<link rel="stylesheet" href="resources/writeups/md-style.css" />
                       </template>
                     </zero-md>
                   <button
@@ -410,7 +410,7 @@
         </div>
       </div>
       <div
-        class="portfolio-modal modal fade"
+        class="portfolio-modal modal"
         id="portfolioModalTowerDefense"
         tabindex="-1"
         role="dialog"
@@ -442,9 +442,9 @@
                       </strong>
                     </li>
                   </ul>
-                    <zero-md src= "resources/writeups/tower-defense/tower-defense.md">
+                    <zero-md src= "resources/writeups/tower-defense/tower-defense.md" id="MDTowerDefense">
                       <template data-merge="append">
-                        <<link rel="stylesheet" href="resources/writeups/style.css" />
+                        <<link rel="stylesheet" href="resources/writeups/md-style.css" />
                       </template>
                     </zero-md>
                   <button
@@ -483,6 +483,7 @@
     <script src="scripts/carousel.js"></script>
     <script src="scripts/gif-hover.js"></script>
     <script src="scripts/show-more.js"></script>
+    <script src="scripts/auto-md-ids.js"></script>"
     <script src="scripts/url-with-modal.js"></script>
   </body>
 </html>

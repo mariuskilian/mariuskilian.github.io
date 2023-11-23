@@ -105,7 +105,7 @@ details > details {
     margin-right: 1px;
 }
 
-img, .video {
+.banner, details img, .video {
     border-radius: 8px;
     outline: #666 solid 1px;
     background-color: #666;
@@ -124,9 +124,20 @@ img, .video {
     transform: translateX(-50%);
 }
 
-.banner {
+.wide {
     width: calc(100% - 2px);
     margin-bottom: 1em;
+}
+
+.banner {
+    aspect-ratio: 10 / 3;
+    overflow: hidden;
+}
+
+.banner > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .shadow {
