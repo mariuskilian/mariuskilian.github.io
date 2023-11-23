@@ -34,7 +34,7 @@ function handleHash() {
         sections.forEach((sectionName) => {
           sectionId += sectionName;
           let nextSection = lastSection.querySelector(
-            "#" + sectionId.replace("/", "\\/")
+            "#" + sectionId.replaceAll("/", "\\/")
           );
           if (!nextSection) return;
           lastSection = nextSection;
