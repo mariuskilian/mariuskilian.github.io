@@ -1,3 +1,10 @@
+// Attach the event listener to the window
+window.onhashchange = handleHash;
+window.addEventListener("DOMContentLoaded", handleHash);
+
+let modalOnShown = new Map();
+let modalOnLoad = new Map();
+
 // Parse hash into query:
 // e.g. #/PokeArena?section=names-and-hierarchy becomes
 //    window.location.hash = #/PokeArena
@@ -18,18 +25,21 @@ function fixUrlHash(url) {
 
 function handleHash() {
   const url = fixUrlHash(window.location);
-  const portfolioToOpen = url.hash.substring(2);
+  const pfName = url.hash.substring(2);
 
-  if (portfolioToOpen !== null && portfolioToOpen !== "") {
-    let modalLink = document.getElementById("portfolioLink" + portfolioToOpen);
-    let modal = document.getElementById("portfolioModal" + portfolioToOpen);
+  if (pfName !== null && pfName !== "") {
+    let modalLink = document.getElementById("portfolioLink" + pfName);
+    let modal = document.getElementById("portfolioModal" + pfName);
     if (!modalLink) resetUrl();
-    else if (modal.style.display !== "block") modalLink.click();
+    else if (modal.style.display !== "block") {
+      // Close all other modals first (in case url/#/Modal1 followed by url/#/Modal2 is entered)
+      $(".portfolio-modal").modal("hide");
+      $("#portfolioModal" + pfName).modal("show");
+    }
     let openSection = () => {
       if (url.search !== "") {
-        const md = document.getElementById("MD" + portfolioToOpen);
         const sections = url.searchParams.get("section").split("/");
-        let lastSection = md.shadowRoot;
+        let lastSection = document.getElementById("MD" + pfName).shadowRoot;
         let sectionId = "";
         sections.forEach((sectionName) => {
           sectionId += sectionName;
@@ -49,28 +59,44 @@ function handleHash() {
             behavior: "smooth",
           });
         };
-        if (modalShown.get(portfolioToOpen)) scrollToSection();
-        else modalShown.set(portfolioToOpen, scrollToSection);
+        if (modalOnShown.get(pfName)) scrollToSection();
+        else modalOnShown.set(pfName, scrollToSection);
       }
     };
-    if (modalLoaded.get(portfolioToOpen)) openSection();
-    else modalLoaded.set(portfolioToOpen, openSection);
+    if (modalOnLoad.get(pfName)) openSection();
+    else modalOnLoad.set(pfName, openSection);
   }
 }
 
-let modalShown = new Map();
-let modalLoaded = new Map();
-
 document.addEventListener("zero-md-rendered", (evnt) => {
   const mdNode = evnt.detail.node;
-  const portfolioName = mdNode.id.substring(2);
-  if (modalLoaded.has(portfolioName)) modalLoaded.get(portfolioName)();
-  modalLoaded.set(portfolioName, () => {});
+  const pfName = mdNode.id.substring(2);
+  if (modalOnLoad.has(pfName)) modalOnLoad.get(pfName)();
+  modalOnLoad.set(pfName, () => {});
+});
 
-  let link = document.getElementById("portfolioLink" + portfolioName);
-  link.addEventListener("click", () => {
-    appendModalUrl(portfolioName + "");
-  });
+// This patches a bug in iOS Safari where opening and closing a modal
+// made the page jump up. With this it ensures that after closing a modal
+// the user is at the same position than before.
+let homeScrollOnModalOpen;
+
+$(".portfolio-modal").on("shown.bs.modal", function () {
+  let pfName = this.id.replace("portfolioModal", "");
+  if (modalOnShown.has(pfName)) modalOnShown.get(pfName)();
+  modalOnShown.set(pfName, () => {});
+});
+
+$(".portfolio-modal").on("hidden.bs.modal", function () {
+  resetUrl();
+  window.scrollTo({ top: homeScrollOnModalOpen });
+});
+
+$(".portfolio-link").on("click touchstart", function () {
+  let pfName = this.id.replace("portfolioLink", "");
+  $("#portfolioModal" + pfName).modal("show");
+  appendModalUrl(pfName);
+  homeScrollOnModalOpen = window.scrollY;
+  return false;
 });
 
 // When clicking a portfolio item on the page, this makes sure the url is appended
@@ -83,20 +109,5 @@ function appendModalUrl(modalId) {
 }
 
 function resetUrl() {
-  history.replaceState(null, null, window.location.pathname);
+  history.pushState(null, null, window.location.pathname);
 }
-
-$(".portfolio-modal").on("hide.bs.modal", function () {
-  console.log("hidden");
-  resetUrl();
-});
-
-$(".portfolio-modal").on("shown.bs.modal", function () {
-  let portfolioName = this.id.replace("portfolioModal", "");
-  if (modalShown.has(portfolioName)) modalShown.get(portfolioName)();
-  modalShown.set(portfolioName, () => {});
-});
-
-// Attach the event listener to the window
-window.onhashchange = handleHash;
-window.addEventListener("DOMContentLoaded", handleHash);
