@@ -657,3 +657,27 @@ fieldset[disabled] .btn-success.active {
 .slider {
   z-index: -1;
 }
+
+.clipboard {
+  position: fixed;
+  bottom: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10000;
+
+  background-color: #EEEF;
+  color: #778899CC;
+  padding: 0.25em 0.5em;
+  border-radius: 0.25em;
+  outline: 1px dashed #778899CC;
+  box-shadow: 0 0 5px #778899CC;
+
+  filter: opacity(0%);
+  transition: transform 0.35s ease-in, filter 0.35s ease-in;
+}
+
+.clipboard[show] {
+  filter: opacity(100%);
+  transform: translateX(-50%) translateY(-60px);
+  transition: transform 0.35s ease-out, filter 0.35s ease-out;
+}
