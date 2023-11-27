@@ -91,7 +91,7 @@ $(".portfolio-modal").on("hidden.bs.modal", function () {
   window.scrollTo({ top: homeScrollOnModalOpen });
 });
 
-$(".portfolio-link").on("click touchstart", function () {
+$(".portfolio-link").on("click", function () {
   let pfName = this.id.replace("portfolioLink", "");
   $("#portfolioModal" + pfName).modal("show");
   appendModalUrl(pfName);
