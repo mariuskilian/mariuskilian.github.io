@@ -633,11 +633,11 @@ fieldset[disabled] .btn-success.active {
   transition: height 2s linear;
 }
 
-#dots > a {
+.about-link {
   color: #2c3e50;
   text-decoration: underline;
 }
-#dots > a:hover {
+.about-link:hover {
   color: #2c3e50;
   text-decoration: none;
 }
