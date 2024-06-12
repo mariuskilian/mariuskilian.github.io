@@ -642,9 +642,12 @@ fieldset[disabled] .btn-success.active {
   text-decoration: none;
 }
 
-#cv-frame {
+iframe {
   width: 100%;
   aspect-ratio:1/1.292;
+}
+
+#cv-frame {
   height: 0;
   scale: 0;
   transition: scale 1s ease-in-out;
@@ -680,4 +683,14 @@ fieldset[disabled] .btn-success.active {
   filter: opacity(100%);
   transform: translateX(-50%) translateY(-60px);
   transition: transform 0.35s ease-out, filter 0.35s ease-out;
+}
+
+#portfolio-toggle {
+  display: block;
+  justify-content: center;
+  text-align: center;
+}
+
+.modal-close-btn {
+  margin-top: 25px;
 }

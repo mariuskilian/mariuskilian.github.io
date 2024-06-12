@@ -106,6 +106,64 @@
             </div>
           </div>
           <div class="row">
+
+            <div class="col-sm-4 portfolio-item">
+              <a
+                href="#portfolioModalUnMatchups"
+                id = "portfolioLinkUnMatchups"
+                class="portfolio-link"
+                data-toggle="modal"
+              >
+              <div class="portfolio-text">UnMatchups</div>
+              <div class="portfolio-cover-container">
+                <img
+                  imgpath="resources/portfolios/unmatchups/cover.jpg"
+                  gifpath="resources/portfolios/unmatchups/cover.jpg"
+                  class="img-responsive"
+                  alt=""
+                />
+              </div>
+              </a>
+            </div>
+
+            <div class="col-sm-4 portfolio-item">
+              <a
+                href="#portfolioModalSortify"
+                id = "portfolioLinkSortify"
+                class="portfolio-link"
+                data-toggle="modal"
+              >
+              <div class="portfolio-text">Sortify</div>
+              <div class="portfolio-cover-container">
+                <img
+                  imgpath="resources/portfolios/sortify/cover.jpg"
+                  gifpath="resources/portfolios/sortify/cover.jpg"
+                  class="img-responsive"
+                  alt=""
+                />
+              </div>
+              </a>
+            </div>
+
+            <div class="col-sm-4 portfolio-item">
+              <a
+                href="#portfolioModalOctree"
+                id = "portfolioLinkOctree"
+                class="portfolio-link"
+                data-toggle="modal"
+              >
+              <div class="portfolio-text">B.Sc. Thesis</div>
+              <div class="portfolio-cover-container">
+                <img
+                  imgpath="resources/portfolios/octree/cover.jpg"
+                  gifpath="resources/portfolios/octree/cover.jpg"
+                  class="img-responsive"
+                  alt=""
+                />
+              </div>
+              </a>
+            </div>
+
             <div class="col-sm-4 portfolio-item">
               <a
                 href="#portfolioModalPokeArena"
@@ -118,6 +176,25 @@
                 <img
                   imgpath="resources/portfolios/poke-arena/cover.jpg"
                   gifpath="resources/portfolios/poke-arena/hover.gif"
+                  class="img-responsive"
+                  alt=""
+                />
+              </div>
+              </a>
+            </div>
+
+            <div class="col-sm-4 portfolio-item">
+              <a
+                href="#portfolioModalLFA"
+                id = "portfolioLinkLFA"
+                class="portfolio-link"
+                data-toggle="modal"
+              >
+              <div class="portfolio-text">M.Sc. Thesis</div>
+              <div class="portfolio-cover-container">
+                <img
+                  imgpath="resources/portfolios/lfa/cover.jpg"
+                  gifpath="resources/portfolios/lfa/cover.jpg"
                   class="img-responsive"
                   alt=""
                 />
@@ -144,24 +221,36 @@
               </a>
             </div>
 
-            <div class="col-sm-4 portfolio-item">
-              <a
-                href="#portfolioModalTowerDefense"
-                id = "portfolioLinkTowerDefense"
-                class="portfolio-link"
-                data-toggle="modal"
-              >
-              <div class="portfolio-text">Tower Defense</div>
-              <div class="portfolio-cover-container">
-                <img
-                  imgpath="resources/portfolios/tower-defense/cover.jpg"
-                  gifpath="resources/portfolios/tower-defense/cover.jpg"
-                  class="img-responsive portfolio-cover"
-                  alt=""
-                />
+            <span id="full-portfolio" style="display:none">
+
+              <div class="col-sm-4 portfolio-item">
+                <a
+                  href="#portfolioModalTowerDefense"
+                  id = "portfolioLinkTowerDefense"
+                  class="portfolio-link"
+                  data-toggle="modal"
+                >
+                <div class="portfolio-text">Tower Defense</div>
+                <div class="portfolio-cover-container">
+                  <img
+                    imgpath="resources/portfolios/tower-defense/cover.jpg"
+                    gifpath="resources/portfolios/tower-defense/cover.jpg"
+                    class="img-responsive portfolio-cover"
+                    alt=""
+                  />
+                </div>
+                </a>
               </div>
-              </a>
-            </div>
+
+            </span>
+
+          </div>
+
+          <div id="portfolio-toggle">
+            <a href="#portfolioLinkTowerDefense" target="_self" onclick="show_full_portfolio()" class="btn btn-success btn-outline page-scroll">
+              <span id="portfolio-show-btn"><i class="fa fa-eye"></i> Show more</span>
+              <span id="portfolio-hide-btn" style="display:none"><i class="fa fa-eye-slash"></i> Hide</span>
+            </a>
           </div>
         </div>
       </section>
@@ -304,6 +393,7 @@
 
 
       <!-- Portfolio Modals -->
+
       <div
         class="portfolio-modal modal"
         id="portfolioModalPokeArena"
@@ -335,7 +425,8 @@
                         <a href="https://learn.microsoft.com/en-us/dotnet/csharp/">C#</a> -
                         <a href="https://docs.unity3d.com/Manual/shader-graph.html">Shader Graph</a> -
                         <a href="https://learn.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl">HLSL</a> -
-                        <a href="https://doc.photonengine.com/bolt/current/getting-started/overview">Photon Bolt</a>
+                        <a href="https://doc.photonengine.com/bolt/current/getting-started/overview">Photon Bolt</a> -
+                        <a href="https://www.git-scm.com">Git</a>
                       </strong>
                     </li>
                   </ul>
@@ -344,19 +435,24 @@
                       <<link rel="stylesheet" href="resources/writeups/md-style.css" />
                     </template>
                   </zero-md>
-                  <button
-                    type="button"
-                    class="btn btn-default"
-                    data-dismiss="modal"
-                  >
-                    <i class="fa fa-times"></i> Close
-                  </button>
+
+                  <div class="modal-close-btn">
+                    <button
+                      type="button"
+                      class="btn btn-default"
+                      data-dismiss="modal"
+                    >
+                      <i class="fa fa-times"></i> Close
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+
       <div
         class="portfolio-modal modal"
         id="portfolioModalSurvivor0"
@@ -387,7 +483,8 @@
                         ><a href="https://unity.com">Unity</a> -
                         <a href="https://learn.microsoft.com/en-us/dotnet/csharp/">C#</a> -
                         <a href="https://github.com/meniku/NPBehave">NPBehave</a> -
-                        <a href="https://get.webgl.org">WebGL</a>
+                        <a href="https://get.webgl.org">WebGL</a> -
+                        <a href="https://www.git-scm.com">Git</a>
                       </strong>
                     </li>
                   </ul>
@@ -396,19 +493,24 @@
                         <<link rel="stylesheet" href="resources/writeups/md-style.css" />
                       </template>
                     </zero-md>
-                  <button
-                    type="button"
-                    class="btn btn-default"
-                    data-dismiss="modal"
-                  >
-                    <i class="fa fa-times"></i> Close
-                  </button>
+
+                    <div class="modal-close-btn">
+                      <button
+                        type="button"
+                        class="btn btn-default"
+                        data-dismiss="modal"
+                      >
+                        <i class="fa fa-times"></i> Close
+                      </button>
+                    </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+
       <div
         class="portfolio-modal modal"
         id="portfolioModalTowerDefense"
@@ -438,7 +540,8 @@
                       <strong
                         ><a href="https://unity.com">Unity</a> -
                         <a href="https://learn.microsoft.com/en-us/dotnet/csharp/">C#</a> -
-                        <a href="https://get.webgl.org">WebGL</a>
+                        <a href="https://get.webgl.org">WebGL</a> -
+                        <a href="https://www.git-scm.com">Git</a>
                       </strong>
                     </li>
                   </ul>
@@ -447,19 +550,292 @@
                         <link rel="stylesheet" href="resources/writeups/md-style.css" />
                       </template>
                     </zero-md>
-                  <button
-                    type="button"
-                    class="btn btn-default"
-                    data-dismiss="modal"
-                  >
-                    <i class="fa fa-times"></i> Close
-                  </button>
+
+                    <div class="modal-close-btn">
+                      <button
+                        type="button"
+                        class="btn btn-default"
+                        data-dismiss="modal"
+                      >
+                        <i class="fa fa-times"></i> Close
+                      </button>
+                    </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+
+      <div
+        class="portfolio-modal modal"
+        id="portfolioModalLFA"
+        tabindex="-1"
+        role="dialog"
+        aria-hidden="true"
+      >
+        <div class="modal-content">
+          <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+              <div class="rl"></div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8 col-lg-offset-2">
+                <div class="modal-body">
+                  <h2>Master's Thesis: Linear Function Approximation with Q-Learning for Rich Dynamic Action Spaces</h2>
+                  <hr class="star-primary" />
+                  <ul class="list-inline item-details">
+                    <li>
+                      <strong
+                        >May 2023 - September 2023
+                      </strong>
+                    </li><br>
+                    <li>
+                      <strong
+                        ><a href="https://www.java.com/en/">Java</a> -
+                        <a href="https://www.tabletopgames.ai">TAG</a> -
+                        <a href="https://www.python.org">Python</a> -
+                        <a href="https://www.git-scm.com">Git</a>
+                      </strong>
+                    </li>
+                  </ul>
+
+                  <zero-md src= "resources/writeups/lfa/lfa.md" id="MDLFA">
+                    <template data-merge="append">
+                      <link rel="stylesheet" href="resources/writeups/md-style.css" />
+                    </template>
+                  </zero-md>
+
+                  <div>
+                    <iframe src="resources/writeups/lfa/MSc Thesis Marius Kilian.pdf"></iframe>
+                    <ul class="nav">
+                      <li>
+                        <div style="text-align: center;">
+                          <a id="open-lfa-btn" href="resources/writeups/lfa/MSc Thesis Marius Kilian.pdf" class="btn btn-success btn-outline">
+                            Open
+                          </a>
+                          <a id="download-lfa-btn" href="resources/writeups/lfa/MSc Thesis Marius Kilian.pdf" download class="btn btn-success btn-outline">
+                            <i class="fa fa-download"></i> Download
+                          </a>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div class="modal-close-btn">
+                    <button
+                      type="button"
+                      class="btn btn-default"
+                      data-dismiss="modal"
+                    >
+                      <i class="fa fa-times"></i> Close
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div
+        class="portfolio-modal modal"
+        id="portfolioModalOctree"
+        tabindex="-1"
+        role="dialog"
+        aria-hidden="true"
+      >
+        <div class="modal-content">
+          <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+              <div class="rl"></div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8 col-lg-offset-2">
+                <div class="modal-body">
+                  <h2>Bachelor's Thesis: Compressed Octrees and BVHs for Ray Tracing Acceleration Structures</h2>
+                  <hr class="star-primary" />
+                  <ul class="list-inline item-details">
+                    <li>
+                      <strong
+                        >December 2020 - April 2021
+                      </strong>
+                    </li><br>
+                    <li>
+                      <strong
+                        ><a href="https://isocpp.org">C++</a> -
+                        <a href="https://cmake.org">CMake</a> -
+                        <a href="https://github.com/mmp/pbrt-v3">pbrt, v3</a> -
+                        <a href="https://www.python.org">Python</a> -
+                        <a href="https://www.git-scm.com">Git</a> -
+                        <a href="https://www.intel.com/content/www/us/en/developer/tools/oneapi/vtune-profiler.html">Intel VTune</a>
+                      </strong>
+                    </li>
+                  </ul>
+
+                  <zero-md src= "resources/writeups/octree/octree.md" id="MDOctree">
+                    <template data-merge="append">
+                      <link rel="stylesheet" href="resources/writeups/md-style.css" />
+                    </template>
+                  </zero-md>
+
+                  <div>
+                    <iframe src="resources/writeups/octree/BSc Thesis Marius Kilian.pdf"></iframe>
+                    <ul class="nav">
+                      <li>
+                        <div style="text-align: center;">
+                          <a id="open-lfa-btn" href="resources/writeups/octree/BSc Thesis Marius Kilian.pdf" class="btn btn-success btn-outline">
+                            Open
+                          </a>
+                          <a id="download-lfa-btn" href="resources/writeups/octree/BSc Thesis Marius Kilian.pdf" download class="btn btn-success btn-outline">
+                            <i class="fa fa-download"></i> Download
+                          </a>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div class="modal-close-btn">
+                    <button
+                      type="button"
+                      class="btn btn-default"
+                      data-dismiss="modal"
+                    >
+                      <i class="fa fa-times"></i> Close
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div
+        class="portfolio-modal modal"
+        id="portfolioModalSortify"
+        tabindex="-1"
+        role="dialog"
+        aria-hidden="true"
+      >
+        <div class="modal-content">
+          <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+              <div class="rl"></div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8 col-lg-offset-2">
+                <div class="modal-body">
+                  <h2>Sortify</h2>
+                  <hr class="star-primary" />
+                  <ul class="list-inline item-details">
+                    <li>
+                      <strong
+                        >May 2022 - July 2022
+                      </strong>
+                    </li><br>
+                    <li>
+                      <strong
+                        ><a href="https://ecma-international.org/publications-and-standards/standards/ecma-262/">JavaScript</a> -
+                        <a href="https://react.dev">React</a> -
+                        <a href="https://html.spec.whatwg.org">HTML</a> -
+                        <a href="https://www.w3.org/TR/CSS/#css">CSS</a> -
+                        <a href="https://www.git-scm.com">Git</a>
+                      </strong>
+                    </li>
+                  </ul>
+
+                  <zero-md src= "resources/writeups/sortify/sortify.md" id="MDSortify">
+                    <template data-merge="append">
+                      <link rel="stylesheet" href="resources/writeups/md-style.css" />
+                    </template>
+                  </zero-md>
+
+                  <div class="modal-close-btn">
+                    <button
+                      type="button"
+                      class="btn btn-default"
+                      data-dismiss="modal"
+                    >
+                      <i class="fa fa-times"></i> Close
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div
+        class="portfolio-modal modal"
+        id="portfolioModalUnMatchups"
+        tabindex="-1"
+        role="dialog"
+        aria-hidden="true"
+      >
+        <div class="modal-content">
+          <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+              <div class="rl"></div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8 col-lg-offset-2">
+                <div class="modal-body">
+                  <h2>UnMatchups</h2>
+                  <hr class="star-primary" />
+                  <ul class="list-inline item-details">
+                    <li>
+                      <strong
+                        >June 2024 - Present
+                      </strong>
+                    </li><br>
+                    <li>
+                      <strong
+                        ><a href="https://www.typescriptlang.org">TypeScript</a> -
+                        <a href="https://react.dev">React</a> -
+                        <a href="https://www.python.org">Python</a> -
+                        <a href="https://html.spec.whatwg.org">HTML</a> -
+                        <a href="https://www.w3.org/TR/CSS/#css">CSS</a> -
+                        <a href="https://www.git-scm.com">Git</a>
+                      </strong>
+                    </li>
+                  </ul>
+
+                  <zero-md src= "resources/writeups/unmatchups/unmatchups.md" id="MDUnMatchups">
+                    <template data-merge="append">
+                      <link rel="stylesheet" href="resources/writeups/md-style.css" />
+                    </template>
+                  </zero-md>
+
+                  <div class="modal-close-btn">
+                    <button
+                      type="button"
+                      class="btn btn-default"
+                      data-dismiss="modal"
+                    >
+                      <i class="fa fa-times"></i> Close
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Plugin JavaScript -->
 
       <!-- Copied to Clipboard -->

@@ -22,3 +22,20 @@ function show_cv() {
     downloadCVButton.style.scale = "1";
   }, 1000);
 }
+
+function show_full_portfolio() {
+  var fullPF = document.getElementById("full-portfolio");
+  var pfToggle = document.getElementById("portfolio-toggle");
+
+  if (!pfToggle.hasAttribute("showing")) {
+    pfToggle.setAttribute("showing", "");
+    document.getElementById("portfolio-show-btn").style.display = "none";
+    document.getElementById("portfolio-hide-btn").style.display = "inline";
+    fullPF.style.display = "inline";
+  } else {
+    pfToggle.removeAttribute("showing");
+    document.getElementById("portfolio-show-btn").style.display = "inline";
+    document.getElementById("portfolio-hide-btn").style.display = "none";
+    fullPF.style.display = "none";
+  }
+}
