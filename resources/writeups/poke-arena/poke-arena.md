@@ -69,7 +69,7 @@ I decided to go with a number of manager classes to handle general gameplay logi
 
 The manager classes having the `Player` prefix are all scripts that are run server-side with one instance per player, and are components of Player game objects in Unity. For example, in an 8-player game, the server holds 8 instances of [`PlayerLevelMan`], 8 instances of [`PlayerFinanceMan`], 8 instances of [`PlayerBoardMan`], and so forth. All of these managers inherit from the [`PlayerManager`] class, which provides simple common functionality _(the inheritance from `GlobalEventListener` is due to the Photon Bolt Framework, explained in the [Global Events](#event-system/global-events) section)_.
 
-<div class="code-snippet" csname="PlayerManager"><a target="_blank" href="https://github.com/mariuskilian/Poke-Arena/blob/master/Assets/Scripts/Server/PerPlayer/PlayerManager.cs">⠀</a></div>
+<div class="code-snippet" csname="PlayerManager.cs"><a target="_blank" href="https://github.com/mariuskilian/Poke-Arena/blob/master/Assets/Scripts/Server/PerPlayer/PlayerManager.cs">⠀</a></div>
 
 ```cs
 public class PlayerManager : GlobalEventListener {
@@ -107,7 +107,7 @@ Further, some components need to react to a high variety of different publishers
 - Hides while a board unit is selected with the shop opened, and re-shows when that unit is dropped
 - User manually showing/hiding the store UI
 
-<div class="code-snippet" csname="UIMan"><a target="_blank" href="https://github.com/mariuskilian/Poke-Arena/blob/f27d920b8b45b620df1d2a126aa1b886bdc6777d/Assets/Scripts/Client/UI/UIMan.cs#L49">⠀</a></div>
+<div class="code-snippet" csname="UIMan.cs"><a target="_blank" href="https://github.com/mariuskilian/Poke-Arena/blob/f27d920b8b45b620df1d2a126aa1b886bdc6777d/Assets/Scripts/Client/UI/UIMan.cs#L49">⠀</a></div>
 
 ```cs
 private void SubscribeLocalEventHandlers() {
@@ -130,7 +130,7 @@ private void SubscribeLocalEventHandlers() {
 
 Each of the `Handle`-methods then respond in the appropriate way. To continue the example of the [`UIMan`] class, these are its `Handle`-methods:
 
-<div class="code-snippet" csname="UIMan"><a target="_blank" href="https://github.com/mariuskilian/Poke-Arena/blob/f27d920b8b45b620df1d2a126aa1b886bdc6777d/Assets/Scripts/Client/UI/UIMan.cs#L66">⠀</a></div>
+<div class="code-snippet" csname="UIMan.cs"><a target="_blank" href="https://github.com/mariuskilian/Poke-Arena/blob/f27d920b8b45b620df1d2a126aa1b886bdc6777d/Assets/Scripts/Client/UI/UIMan.cs#L66">⠀</a></div>
 
 ```cs
 private void HandleToggleStoreEvent() { SetStoreActive(!store.activeSelf); }
@@ -152,14 +152,14 @@ This is just one of the ways the different components interact each other. The m
   </summary><br>
 
 <div class="image-container inline-right">
-  <img src="resources/writeups/poke-arena/bolt-events.png" alt="Bolt Events UI"> <!-- Adjust width as needed -->
+  <img src="resources/writeups/poke-arena/bolt-events.png" alt="Bolt Events UI">
 </div>
 
 Some events required communication between two separate instances, generally server to one or more clients, or a client to the server. For these, I used Photon Bolt's event system. For this, I had to first create all necessary events using Bolt's UI within Unity, to then allow Bolt to compile these events into interfaces, which are inherited by the `GlobalEventListener` Bolt class, which is supplied with several methods of type `public virtual void OnEvent`, with a single parameter as the type of event. These `OnEvent` methods then have to be overridden by a class trying to react to the event. This code snippet shows these compiled methods being created:
 
 <a class="clear"></a>
 
-<div class="code-snippet no-link" csname="GlobalEventListener"><a>⠀</a></div>
+<div class="code-snippet no-link" csname="GlobalEventListener.cs"><a>⠀</a></div>
 
 ```cs
 public class GlobalEventListener : GlobalEventListenerBase, IStoreNewStoreEventListener, IStoreUnitCaughtEventListener, IClientEventManInitializedEventListener,
@@ -178,7 +178,7 @@ public class GlobalEventListener : GlobalEventListenerBase, IStoreNewStoreEventL
 
 Classes that wish to send or react to these events need to inherit from `GlobalEventListener`, such as the following example of the [`PlayerLevelMan`], which handles the players experience level. This is a server-side component, with one instance for each player, and inherits from [`PlayerManager`], which, as described in the [Naming and Hierarchy](#manager-classes/naming-and-hierarchy) section, inherits from `GlobalEventListener`, and runs server-side with one instance per player. It receives the global event that a client triggers when attempting to purchase experience points from money, named `ClientTryBuyExpEvent`, and first checks that this instance of [`PlayerLevelMan`] is the one responsible for the player that triggered the event.
 
-<div class="code-snippet" csname="PlayerLevelMan"><a target="_blank" href="https://github.com/mariuskilian/Poke-Arena/blob/f27d920b8b45b620df1d2a126aa1b886bdc6777d/Assets/Scripts/Server/PerPlayer/PlayerManagers/ResourceManagers/PlayerLevelMan.cs#L18">⠀</a></div>
+<div class="code-snippet" csname="PlayerLevelMan.cs"><a target="_blank" href="https://github.com/mariuskilian/Poke-Arena/blob/f27d920b8b45b620df1d2a126aa1b886bdc6777d/Assets/Scripts/Server/PerPlayer/PlayerManagers/ResourceManagers/PlayerLevelMan.cs#L18">⠀</a></div>
 
 ```cs
 public override void OnEvent(ClientTryBuyExpEvent evnt) {
@@ -211,7 +211,7 @@ A lot of reactions to events happen client-side. For example, as the server upda
 
 To handle incoming global Bolt events, each global event is handled, and a local event is invoked, which is then handled normally by the rest of the client codebase. In some cases, some extra steps are taken, like when the `StoreNewStoreEvent` is triggered, receiving the Bolt Entities (entities that exist in the network) with the network IDs passed by the global event (`evnt.UnitX`), to receive the actual units, which are then passed to the local event.
 
-<div class="code-snippet" csname="ClientGlobalEventMan"><a target="_blank" href="https://github.com/mariuskilian/Poke-Arena/blob/f27d920b8b45b620df1d2a126aa1b886bdc6777d/Assets/Scripts/Client/ClientGlobalEventMan.cs#L18">⠀</a></div>
+<div class="code-snippet" csname="ClientGlobalEventMan.cs"><a target="_blank" href="https://github.com/mariuskilian/Poke-Arena/blob/f27d920b8b45b620df1d2a126aa1b886bdc6777d/Assets/Scripts/Client/ClientGlobalEventMan.cs#L18">⠀</a></div>
 
 ```cs
 public Action GameStartEvent;
@@ -243,7 +243,7 @@ public override void OnEvent(StoreUnitCaughtEvent evnt) { UnitCaughtEvent?.Invok
 
 Local events that need to be sent globally are handled similarly. They are subscribed to as described in the earlier [Local Events](#event-system/local-events) section. Here's the code snippet for this subscription, as a bit of a recap.
 
-<div class="code-snippet" csname="ClientGlobalEventMan"><a target="_blank" href="https://github.com/mariuskilian/Poke-Arena/blob/f27d920b8b45b620df1d2a126aa1b886bdc6777d/Assets/Scripts/Client/ClientGlobalEventMan.cs#L46">⠀</a></div>
+<div class="code-snippet" csname="ClientGlobalEventMan.cs"><a target="_blank" href="https://github.com/mariuskilian/Poke-Arena/blob/f27d920b8b45b620df1d2a126aa1b886bdc6777d/Assets/Scripts/Client/ClientGlobalEventMan.cs#L46">⠀</a></div>
 
 ```cs
 private void SubscribeLocalEventHandlers() {
@@ -261,7 +261,7 @@ private void SubscribeLocalEventHandlers() {
 
 Then, each of the `Handle{...}Event` classes does its relevant setup for things the global event needs sent with it, and triggers the relevant global event. Passing the `GlobalTargets.OnlyServer` parameter to the `Create` function means the event is not sent to other clients.
 
-<div class="code-snippet" csname="ClientGlobalEventMan"><a target="_blank" href="https://github.com/mariuskilian/Poke-Arena/blob/f27d920b8b45b620df1d2a126aa1b886bdc6777d/Assets/Scripts/Client/ClientGlobalEventMan.cs#L58">⠀</a></div>
+<div class="code-snippet" csname="ClientGlobalEventMan.cs"><a target="_blank" href="https://github.com/mariuskilian/Poke-Arena/blob/f27d920b8b45b620df1d2a126aa1b886bdc6777d/Assets/Scripts/Client/ClientGlobalEventMan.cs#L58">⠀</a></div>
 
 ```cs
 private void HandleTryCatchUnitEvent(int idx) {

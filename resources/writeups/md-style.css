@@ -58,7 +58,7 @@ details > details {
 
 .code-snippet::before {
     position: absolute;
-    content: attr(csname) ".cs " url(box-arrow-up-right.svg);
+    content: attr(csname) url(box-arrow-up-right.svg);
     margin-left: 1em;
     color: #555;
     font-family: monospace;
@@ -66,11 +66,15 @@ details > details {
 }
 
 .no-link::before {
-    content: attr(csname) ".cs";
+    content: attr(csname);
 }
 
-.image-container {
+.inline-right {
     float: right;
+}
+
+.inline-left {
+    float: left;
 }
 
 @media (max-width: 599px) {
